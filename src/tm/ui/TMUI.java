@@ -282,6 +282,9 @@ public class TMUI extends JFrame {
     private boolean viewToolBar=true;
 
     private String lastPath = "";
+	public static Color MenuBG = Color.decode("#151b1c");
+	public static Color WindowBG = Color.decode("#222b2e");
+	public static Color AsideBG = Color.decode("#2d383b");
 
 
 /**
@@ -676,6 +679,9 @@ public class TMUI extends JFrame {
             sb.append(makePropertyTag("recentFile", recentFile.getAbsolutePath()));
         }
         sb.append(makePropertyTag("lastPath", lastPath));
+        sb.append(makePropertyTag("MenuBG", "#"+Integer.toHexString(MenuBG.getRGB()).substring(2)));
+        sb.append(makePropertyTag("WindowBG", "#"+Integer.toHexString(WindowBG.getRGB()).substring(2)));
+        sb.append(makePropertyTag("AsideBG", "#"+Integer.toHexString(AsideBG.getRGB()).substring(2)));
 
         sb.append("</settings>\n");
 
@@ -755,6 +761,15 @@ public class TMUI extends JFrame {
             }
             else if (key.equals("lastPath")) {
                 lastPath = value;
+			}
+			else if (key.equals("MenuBG")) {
+                MenuBG = Color.decode(value);
+            }
+            else if (key.equals("WindowBG")) {
+                WindowBG = Color.decode(value);
+            }
+            else if (key.equals("AsideBG")) {
+                AsideBG = Color.decode(value);
             }
         }
     }

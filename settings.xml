@@ -6,4 +6,7 @@
   <property key="viewToolBar" value="true"/>
   <property key="maxRecentFiles" value="10"/>
   <property key="lastPath" value=""/>
+  <property key="MenuBG" value="#151b1c"/>
+  <property key="WindowBG" value="#222b2e"/>
+  <property key="AsideBG" value="#2d383b"/>
 </settings>
