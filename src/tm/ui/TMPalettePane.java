@@ -54,11 +54,11 @@ public class TMPalettePane extends JPanel implements MouseInputListener {
     private ColorBox bgColorBox = new ColorBox();
 
     ClassLoader cl = getClass().getClassLoader();
-    private Cursor pickupCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("tm/icons/Dropper24.gif")).getImage(), new Point(8,23), "Dropper");
-    private JButton decButton = new JButton(new ImageIcon(cl.getResource("tm/icons/DecPalIndex24.gif")));
-    private JButton incButton = new JButton(new ImageIcon(cl.getResource("tm/icons/IncPalIndex24.gif")));
-    private JButton leftShiftButton = new JButton(new ImageIcon(cl.getResource("tm/icons/DecPalIndex24.gif")));
-    private JButton rightShiftButton = new JButton(new ImageIcon(cl.getResource("tm/icons/IncPalIndex24.gif")));
+    private Cursor pickupCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("tm/icons/Dropper24.png")).getImage(), new Point(8,23), "Dropper");
+    private JButton decButton = new JButton(new ImageIcon(cl.getResource("tm/icons/DecPalIndex24.png")));
+    private JButton incButton = new JButton(new ImageIcon(cl.getResource("tm/icons/IncPalIndex24.png")));
+    private JButton leftShiftButton = new JButton(new ImageIcon(cl.getResource("tm/icons/DecPalIndex24.png")));
+    private JButton rightShiftButton = new JButton(new ImageIcon(cl.getResource("tm/icons/IncPalIndex24.png")));
     private JButton swapButton = new JButton(new ImageIcon(cl.getResource("tm/icons/Swap24.gif")));
     private JTextField shiftValueField = new JTextField("1");
 /**

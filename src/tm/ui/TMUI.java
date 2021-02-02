@@ -122,50 +122,50 @@ public class TMUI extends JFrame {
 
     // toolbar buttons
     ClassLoader cl = getClass().getClassLoader();
-    private ToolButton newButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/New24.gif")));
-    private ToolButton openButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Open24.gif")));
-    private ToolButton saveButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Save24.gif")));
-    private ToolButton cutButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Cut24.gif")));
-    private ToolButton copyButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Copy24.gif")));
-    private ToolButton pasteButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Paste24.gif")));
-    private ToolButton undoButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Undo24.gif")));
-    private ToolButton redoButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Redo24.gif")));
-    private ToolButton gotoButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Import24.gif")));
-    private ToolButton addBookmarkButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Bookmarks24.gif")));
-    private ToolButton decWidthButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/DecWidth24.gif")));
-    private ToolButton incWidthButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/IncWidth24.gif")));
-    private ToolButton decHeightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/DecHeight24.gif")));
-    private ToolButton incHeightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/IncHeight24.gif")));
+    private ToolButton newButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/New24.png")));
+    private ToolButton openButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Open24.png")));
+    private ToolButton saveButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Save24.png")));
+    private ToolButton cutButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Cut24.png")));
+    private ToolButton copyButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Copy24.png")));
+    private ToolButton pasteButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Paste24.png")));
+    private ToolButton undoButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Undo24.png")));
+    private ToolButton redoButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Redo24.png")));
+    private ToolButton gotoButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Import24.png")));
+    private ToolButton addBookmarkButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Bookmarks24.png")));
+    private ToolButton decWidthButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/DecWidth24.png")));
+    private ToolButton incWidthButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/IncWidth24.png")));
+    private ToolButton decHeightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/DecHeight24.png")));
+    private ToolButton incHeightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/IncHeight24.png")));
 
     // navigation bar buttons
-    private ToolButton minusPageButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Rewind24.gif")));
-    private ToolButton minusRowButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/StepBack24.gif")));
-    private ToolButton minusTileButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Back24.gif")));
-    private ToolButton minusByteButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Minus24.gif")));
-    private ToolButton plusByteButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Plus24.gif")));
-    private ToolButton plusTileButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Forward24.gif")));
-    private ToolButton plusRowButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/StepForward24.gif")));
-    private ToolButton plusPageButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/FastForward24.gif")));
+    private ToolButton minusPageButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Rewind24.png")));
+    private ToolButton minusRowButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/StepBack24.png")));
+    private ToolButton minusTileButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Back24.png")));
+    private ToolButton minusByteButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Minus24.png")));
+    private ToolButton plusByteButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Plus24.png")));
+    private ToolButton plusTileButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Forward24.png")));
+    private ToolButton plusRowButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/StepForward24.png")));
+    private ToolButton plusPageButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/FastForward24.png")));
 
     // tool palette buttons
-    private ToolToggleButton selectButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Selection24.gif")));
-    private ToolToggleButton zoomButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Zoom24.gif")));
-    private ToolToggleButton pickupButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Dropper24.gif")));
-    private ToolToggleButton brushButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Brush24.gif")));
-    private ToolToggleButton lineButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Line24.gif")));
-    private ToolToggleButton fillButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Fill24.gif")));
-    private ToolToggleButton replaceButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/ColorReplacer24.gif")));
+    private ToolToggleButton selectButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Selection24.png")));
+    private ToolToggleButton zoomButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Zoom24.png")));
+    private ToolToggleButton pickupButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Dropper24.png")));
+    private ToolToggleButton brushButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Brush24.png")));
+    private ToolToggleButton lineButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Line24.png")));
+    private ToolToggleButton fillButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Fill24.png")));
+    private ToolToggleButton replaceButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/ColorReplacer24.png")));
     private ToolToggleButton moveButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Mover24.gif")));
 
     // selection palette buttons
-    private ToolButton mirrorButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Mirror24.gif")));
-    private ToolButton flipButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Flip24.gif")));
-    private ToolButton rotateRightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/RotateRight24.gif")));
-    private ToolButton rotateLeftButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/RotateLeft24.gif")));
-    private ToolButton shiftLeftButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/ShiftLeft24.gif")));
-    private ToolButton shiftRightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/ShiftRight24.gif")));
-    private ToolButton shiftUpButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/ShiftUp24.gif")));
-    private ToolButton shiftDownButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/ShiftDown24.gif")));
+    private ToolButton mirrorButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Mirror24.png")));
+    private ToolButton flipButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Flip24.png")));
+    private ToolButton rotateRightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/RotateRight24.png")));
+    private ToolButton rotateLeftButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/RotateLeft24.png")));
+    private ToolButton shiftLeftButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/ShiftLeft24.png")));
+    private ToolButton shiftRightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/ShiftRight24.png")));
+    private ToolButton shiftUpButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/ShiftUp24.png")));
+    private ToolButton shiftDownButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/ShiftDown24.png")));
 
     // File menu
     private JMenu fileMenu = new JMenu("File");
