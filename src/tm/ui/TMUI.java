@@ -258,7 +258,7 @@ public class TMUI extends JFrame {
     // Help menu
     private JMenu helpMenu = new JMenu("Help");
     private JMenuItem helpTopicsMenuItem = new JMenuItem("Help Topics");
-    private JMenuItem tipMenuItem = new JMenuItem("Tip of the Millennium...");
+	//private JMenuItem tipMenuItem = new JMenuItem("Tip of the Millennium..."); // Still say no to drugs, okay?
     private JMenuItem aboutMenuItem = new JMenuItem("About Tile Molester...");
 
     // button groups
@@ -370,7 +370,7 @@ public class TMUI extends JFrame {
         JComponent.setDefaultLocale(this.locale);
 
         // show splash screen
-        new TMSplashScreen(this);
+        //new TMSplashScreen(this); // No need for a splash screen, it runs immediately on modern systems
 
 // create a translator
         try {
@@ -474,7 +474,6 @@ public class TMUI extends JFrame {
         // Help menu
         helpMenu.setText(xlate("Help"));
         helpTopicsMenuItem.setText(xlate("Help_Topics"));
-        tipMenuItem.setText(xlate("Tip_of_the_Millennium"));
         aboutMenuItem.setText(xlate("About_Tile_Molester"));
 
         UIManager.put("OptionPane.yesButtonText", xlate("Yes"));
@@ -561,7 +560,8 @@ public class TMUI extends JFrame {
         // main toolbar
         initToolBar();
         initNavBar();
-        toolBarPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+		toolBarPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+		toolBarPane.setBackground(MenuBG);
         toolBarPane.add(toolBar);
         toolBarPane.add(navBar);
         pane.add(toolBarPane, BorderLayout.NORTH);
@@ -571,7 +571,7 @@ public class TMUI extends JFrame {
 
         // palette pane & statusbar
         palettePane = new TMPalettePane(this);
-        statusBar.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        //statusBar.setBorder(new BevelBorder(BevelBorder.LOWERED));
         bottomPane.setLayout(new BorderLayout());
         bottomPane.add(palettePane, BorderLayout.CENTER);
         bottomPane.add(statusBar, BorderLayout.SOUTH);
@@ -583,7 +583,8 @@ public class TMUI extends JFrame {
         JPanel barPane = new JPanel();
         barPane.setLayout(new GridLayout(1, 2));
         barPane.add(selectionToolBar);
-        barPane.add(toolPalette);
+		barPane.add(toolPalette);
+		toolPane.setBackground(AsideBG);
         toolPane.setLayout(new BorderLayout());
         toolPane.add(barPane, BorderLayout.NORTH);
         pane.add(toolPane, BorderLayout.WEST);
@@ -628,6 +629,7 @@ public class TMUI extends JFrame {
                 doExitCommand();
             }
             public void windowActivated(WindowEvent e) {
+				setExtendedState(JFrame.NORMAL); // Hacky way to make it not run in full screen by default
 // HACK to fix the GUI after running FCEU in fullscreen mode
 //                int state = getExtendedState();
 //                setExtendedState(JFrame.ICONIFIED);
@@ -1159,7 +1161,7 @@ public class TMUI extends JFrame {
         toolButtonGroup.add(replaceButton);
         toolButtonGroup.add(moveButton);
         selectButton.setSelected(true); // starting tool
-        toolPalette.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        //toolPalette.setBorder(new BevelBorder(BevelBorder.LOWERED));
     }
 
 /**
@@ -1318,7 +1320,7 @@ public class TMUI extends JFrame {
         );
         fileMenu.add(closeAllMenuItem);
         //
-        fileMenu.addSeparator();
+        //fileMenu.addSeparator();
         // Save
         saveMenuItem.setMnemonic(KeyEvent.VK_S);
         saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
@@ -2009,16 +2011,7 @@ public class TMUI extends JFrame {
             }
         );
         helpMenu.add(helpTopicsMenuItem);
-        // Tip of the Millennium
-        tipMenuItem.setMnemonic(KeyEvent.VK_M);
-        tipMenuItem.addActionListener(
-            new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    doTipCommand();
-                }
-            }
-        );
-        helpMenu.add(tipMenuItem);
+        
         // About
         aboutMenuItem.setMnemonic(KeyEvent.VK_A);
         aboutMenuItem.addActionListener(
@@ -2130,8 +2123,8 @@ public class TMUI extends JFrame {
 
             // remove view from the FileImage and desktop
             img.removeView(view);
-            view.dispose();
             desktop.remove(view);
+            view.dispose();
             desktop.revalidate();
             desktop.repaint();
 
@@ -2239,8 +2232,8 @@ public class TMUI extends JFrame {
 
             // remove the view
             img.removeView(view);
-            view.dispose();
             desktop.remove(view);
+            view.dispose();
         }
 
         buildReopenMenu();
@@ -2719,7 +2712,7 @@ public class TMUI extends JFrame {
 public void doAboutCommand()
 {
     JOptionPane.showMessageDialog(this,
-            "Tile Molester v0.19\nby SnowBro 2003-2005 (v0.16)\nby Dr. MefistO 2013 (v0.17.2)\nby Mewster 2014-2015 (v0.19)", "Tile Molester",
+            "Tile Molester v0.20\nby SnowBro 2003-2005 (v0.16)\nby Dr. MefistO 2013 (v0.17.2)\nby Mewster 2014-2015 (v0.19)\nby toruzz 2020 (v0.20)", "Tile Molester",
             1);
 }
 

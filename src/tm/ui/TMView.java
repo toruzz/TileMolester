@@ -43,6 +43,9 @@ import java.util.Vector;
 **/
 
 public class TMView extends JInternalFrame implements ChangeListener {
+	Color MenuBG = TMUI.MenuBG;
+	Color WindowBG = TMUI.WindowBG;
+	Color AsideBG = TMUI.AsideBG;
 
     private static int frameCount = 0;
     private JPanel contentPane = new JPanel();
@@ -77,7 +80,10 @@ public class TMView extends JInternalFrame implements ChangeListener {
         this.fileImage = fileImage;
         fileImage.addView(this);
         setDoubleBuffered(true);
-        setBackground(Color.gray);
+		//setBackground(Color.gray);
+		setFrameIcon(null);
+		setBackground(MenuBG);
+
         setDefaultCloseOperation(JInternalFrame.DO_NOTHING_ON_CLOSE);
 
         addInternalFrameListener(new InternalFrameAdapter() {
@@ -99,7 +105,8 @@ public class TMView extends JInternalFrame implements ChangeListener {
 
         // init UI components
         // the panel containing the slider and editor canvas
-        contentPane.setBackground(Color.gray);
+		//contentPane.setBackground(Color.gray);
+		contentPane.setBackground(AsideBG);
         contentPane.setLayout(null);
         contentPane.setFocusable(true);
         contentPane.addKeyListener(new ViewKeyListener(this));
@@ -120,9 +127,12 @@ public class TMView extends JInternalFrame implements ChangeListener {
         // the slider
         slider.setFocusable(false);
         slider.setInverted(true);
-        contentPane.add(slider);
-        slider.setLocation(0, 0);
-        slider.setSize(24, 384);
+		contentPane.add(slider);
+		slider.setForeground(AsideBG);
+        //slider.setLocation(0, 0);
+		//slider.setSize(24, 384);
+		slider.setLocation(4, -14);
+        slider.setSize(32, 424);
         slider.addChangeListener(this);
 
         // the scrollpane

@@ -72,12 +72,12 @@ public class TMStatusBar extends JPanel {
         add(p3);
 //        pane.add(new JLabel("    "));   // just some whitespace
 
-        offsetLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        coordsLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        palOffsetLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        codecLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        modeLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        tilesLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        //offsetLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        //coordsLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        //palOffsetLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        //codecLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        //modeLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        //tilesLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
     }
 
 /**

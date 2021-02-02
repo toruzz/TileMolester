@@ -5,6 +5,7 @@
   <property key="viewStatusBar" value="true"/>
   <property key="viewToolBar" value="true"/>
   <property key="maxRecentFiles" value="10"/>
+  <property key="recentFile" value="/home/ivan/Escritorio/Otros/Apps/TM200"/>
   <property key="lastPath" value=""/>
   <property key="MenuBG" value="#151b1c"/>
   <property key="WindowBG" value="#222b2e"/>
