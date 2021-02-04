@@ -35,6 +35,10 @@ import java.awt.event.*;
 import java.io.*;
 import javax.swing.border.*;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.plaf.ButtonUI;
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.ToolBarUI;
+
 import java.util.Locale;
 import java.util.Vector;
 import java.util.Hashtable;
@@ -58,6 +62,10 @@ import org.xml.sax.SAXParseException;
 **/
 
 public class TMUI extends JFrame {
+
+	private static String OS = System.getProperty("os.name").toLowerCase();
+	public static boolean isLinux = OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0;
+	public static boolean isWindows = OS.indexOf("win") >= 0;
 
     // tool types
     public static final int SELECT_TOOL = 1;
@@ -282,9 +290,12 @@ public class TMUI extends JFrame {
     private boolean viewToolBar=true;
 
     private String lastPath = "";
-	public static Color MenuBG = Color.decode("#151b1c");
-	public static Color WindowBG = Color.decode("#222b2e");
-	public static Color AsideBG = Color.decode("#2d383b");
+	//public static Color MenuBG = Color.decode("#151b1c");
+	//public static Color WindowBG = Color.decode("#222b2e");
+	//public static Color AsideBG = Color.decode("#2d383b");
+	public static Color MenuBG = SystemColor.menu;
+	public static Color WindowBG = SystemColor.window;
+	public static Color AsideBG = SystemColor.desktop;
 
 
 /**
@@ -772,12 +783,67 @@ public class TMUI extends JFrame {
             }
             else if (key.equals("AsideBG")) {
                 AsideBG = Color.decode(value);
-            }
+			}
+			
         }
     }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Begin long bunch of code for setting up menus, panels etc...
+
+	static class CButtonUI extends ButtonUI {
+
+		/*
+		* private static final CButtonUI buttonUI = new CButtonUI();
+		* 
+		* ModifButtonUI() { }
+		*/
+
+		public static ComponentUI createUI(JComponent c) {
+			return new CButtonUI();
+		}
+
+		@Override
+		public void paint(Graphics g, JComponent c) {
+			final Color color1 = new Color(230, 255, 255, 0);
+			final Color color2 = new Color(255, 230, 255, 64);
+			final Color alphaColor = new Color(200, 200, 230, 64);
+			final Color color3 = new Color(alphaColor.getRed(), alphaColor.getGreen(), alphaColor.getBlue(), 0);
+			final Color color4 = new Color(alphaColor.getRed(), alphaColor.getGreen(), alphaColor.getBlue(), 64);
+			super.paint(g, c);
+			Graphics2D g2D = (Graphics2D) g;
+			GradientPaint gradient1 = new GradientPaint(0.0F, (float) c.getHeight() / (float) 2, color1, 0.0F, 0.0F,
+					color2);
+			Rectangle rec1 = new Rectangle(0, 0, c.getWidth(), c.getHeight() / 2);
+			g2D.setPaint(gradient1);
+			g2D.fill(rec1);
+			GradientPaint gradient2 = new GradientPaint(0.0F, (float) c.getHeight() / (float) 2, color3, 0.0F,
+					c.getHeight(), color4);
+			Rectangle rec2 = new Rectangle(0, c.getHeight() / 2, c.getWidth(), c.getHeight());
+			g2D.setPaint(gradient2);
+			g2D.fill(rec2);
+		}
+
+		/*
+		@Override
+		public void paintButtonPressed(Graphics g, AbstractButton b) {
+			paintText(g, b, b.getBounds(), b.getText());
+			g.setColor(Color.red.brighter());
+			g.fillRect(0, 0, b.getSize().width, b.getSize().height);
+		}
+		*/
+
+		public void paintBorder(Graphics g) {
+		}
+
+		/*
+		@Override
+		protected void paintFocus(Graphics g, AbstractButton b, Rectangle viewRect, Rectangle textRect,
+				Rectangle iconRect) {
+		}
+		*/
+	}
+
 
 /**
 *
@@ -786,7 +852,11 @@ public class TMUI extends JFrame {
 **/
 
     private void initToolBar() {
-        // New
+		// New
+		//newButton.setUI(new CButtonUI());
+		//newButton.setContentAreaFilled(false);
+		newButton.repaint();
+		
         newButton.setToolTipText(newMenuItem.getText());
         newButton.setFocusable(false);
         newButton.addActionListener(
@@ -3806,18 +3876,21 @@ public void doAboutCommand()
 **/
 
     private class ToolButton extends JButton {
-        Insets insets=null;
+		
+		Insets insets=null;
+		
         public ToolButton(String text) {
             super(text);
             insets = new Insets(2,2,2,2);
         }
         public ToolButton(ImageIcon icon) {
-            super(icon);
+			super(icon);
+			setBackground(MenuBG);
             insets = new Insets(2,2,2,2);
         }
         public Insets getInsets() {
             return insets;
-        }
+		}
     }
 
 /**
@@ -3834,7 +3907,8 @@ public void doAboutCommand()
             insets = new Insets(2,2,2,2);
         }
         public ToolToggleButton(ImageIcon icon) {
-            super(icon);
+			super(icon);
+			setBackground(Color.MAGENTA);
             insets = new Insets(2,2,2,2);
         }
         public Insets getInsets() {

@@ -19,7 +19,8 @@
 import javax.swing.UIManager;
 
 import tm.ui.TMUI;
-
+import java.awt.Color;
+import java.awt.SystemColor;
 
 
 /**
@@ -33,15 +34,14 @@ import tm.ui.TMUI;
 
 public class TileMolester {
 
-/**
-*
-* Constructor.
-*
-**/
+	/**
+	*
+	* Constructor.
+	*
+	**/
 
-	private static String OS = System.getProperty("os.name").toLowerCase();
-	public static Boolean isLinux = OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0;
-	public static Boolean isWindows = OS.indexOf("win") >= 0;
+	boolean isLinux = TMUI.isLinux;
+	boolean isWindows = TMUI.isWindows;
 
     public TileMolester() {
 		try {
@@ -50,16 +50,49 @@ public class TileMolester {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		new TMUI();
     }
 
-/**
-*
-* Starts up the program.
-*
-**/
+	/**
+	*
+	* Starts up the program.
+	*
+	**/
 
     public static void main(String[] args) {
+		Color[] sysColor = new Color[]{    
+			SystemColor.activeCaption,
+			SystemColor.activeCaptionBorder,
+			SystemColor.activeCaptionText,
+			SystemColor.control,
+			SystemColor.controlDkShadow,
+			SystemColor.controlHighlight,
+			SystemColor.controlLtHighlight,
+			SystemColor.controlShadow,
+			SystemColor.controlText,
+			SystemColor.desktop,
+			SystemColor.inactiveCaption,
+			SystemColor.inactiveCaptionBorder,
+			SystemColor.inactiveCaptionText,
+			SystemColor.info,
+			SystemColor.infoText,
+			SystemColor.menu,
+			SystemColor.menuText,
+			SystemColor.scrollbar,
+			SystemColor.text,
+			SystemColor.textHighlight,
+			SystemColor.textHighlightText,
+			SystemColor.textInactiveText,
+			SystemColor.textText,
+			SystemColor.window,
+			SystemColor.windowBorder,
+			SystemColor.windowText};
+		
+		for(Color c: sysColor){
+		   System.out.println(c); 
+		}
+
         new TileMolester();
     }
 

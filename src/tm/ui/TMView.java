@@ -46,6 +46,8 @@ public class TMView extends JInternalFrame implements ChangeListener {
 	Color MenuBG = TMUI.MenuBG;
 	Color WindowBG = TMUI.WindowBG;
 	Color AsideBG = TMUI.AsideBG;
+	boolean isLinux = TMUI.isLinux;
+	boolean isWindows = TMUI.isWindows;
 
     private static int frameCount = 0;
     private JPanel contentPane = new JPanel();
@@ -129,10 +131,14 @@ public class TMView extends JInternalFrame implements ChangeListener {
         slider.setInverted(true);
 		contentPane.add(slider);
 		slider.setForeground(AsideBG);
-        //slider.setLocation(0, 0);
-		//slider.setSize(24, 384);
-		slider.setLocation(4, -14);
-        slider.setSize(32, 424);
+		
+		if(isLinux){
+			slider.setLocation(4, -14);
+			slider.setSize(32, 424);
+		}else{
+			slider.setLocation(0, 0);
+			slider.setSize(24, 384);
+		}
         slider.addChangeListener(this);
 
         // the scrollpane

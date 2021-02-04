@@ -6,8 +6,9 @@
   <property key="viewToolBar" value="true"/>
   <property key="maxRecentFiles" value="10"/>
   <property key="recentFile" value="/home/ivan/Escritorio/Otros/Apps/TM200"/>
-  <property key="lastPath" value=""/>
-  <property key="MenuBG" value="#151b1c"/>
-  <property key="WindowBG" value="#222b2e"/>
-  <property key="AsideBG" value="#2d383b"/>
+  <property key="recentFile" value="/home/ivan/Escritorio/Otros/DK94/DK94.gb"/>
+  <property key="lastPath" value="/home/ivan/Escritorio/Otros/DK94"/>
+  <property key="MenuBG" value="#ff0000"/>
+  <property key="WindowBG" value="#0000ff"/>
+  <property key="AsideBG" value="#00ff00"/>
 </settings>
