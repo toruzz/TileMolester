@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE settings SYSTEM "settings.dtd">
 <settings>
-  <property key="locale" value="en_US"/>
   <property key="viewStatusBar" value="true"/>
   <property key="viewToolBar" value="true"/>
   <property key="maxRecentFiles" value="10"/>
-  <property key="MenuBG" value="#1b2224"/>
-  <property key="WindowBG" value="#141a1b"/>
-  <property key="AsideBG" value="#1b2224"/>
-  <property key="FrameBG" value="#222b2e"/>
-  <property key="DarkIcons" value="false"/>
+  <property key="MenuBG" value="#f0f0f0"/>
+  <property key="WindowBG" value="#d2d2d2"/>
+  <property key="AsideBG" value="#f0f0f0"/>
+  <property key="FrameBG" value="#b5b5b5"/>
+  <property key="DarkIcons" value="true"/>
 </settings>

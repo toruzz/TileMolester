@@ -781,6 +781,7 @@ public class TMUI extends JFrame {
 **/
 
     public void loadSettings() {
+		boolean loadedLocale = false;
         Document doc = null;
         try {
             doc = XMLParser.parse(settingsFile);
@@ -797,7 +798,7 @@ public class TMUI extends JFrame {
         NodeList properties = settings.getElementsByTagName("property");
         // process all the properties
         for (int i=0; i<properties.getLength(); i++) {
-            // get property (key, value) pair
+			// get property (key, value) pair
             Element property = (Element)properties.item(i);
             String key = property.getAttribute("key");
             String value = property.getAttribute("value");
@@ -807,7 +808,8 @@ public class TMUI extends JFrame {
                 if (st.countTokens() != 2) continue;
                 String language = st.nextToken();
                 String country = st.nextToken();
-                locale = new Locale(language, country);
+				locale = new Locale(language, country);
+				loadedLocale = true;
             }
             if (key.equals("viewStatusBar")) {
                 viewStatusBar = value.equals("true");
@@ -842,8 +844,8 @@ public class TMUI extends JFrame {
 			else if (key.equals("DarkIcons")) {
                 DarkIcons = value.equals("true");
 			}
-			
-        }
+		}
+		if(!loadedLocale) selectLanguage();
     }
 
 ///////////////////////////////////////////////////////////////////////////////
