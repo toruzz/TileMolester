@@ -11,6 +11,7 @@ You can change the UI colors and icons theme in settings.xml.
 - Native theme loading in Windows and Linux
 - New icon theme
 - Modified settings file to allow custom window colors
+- Added support for character files, 2bpp raw files and raw palette files
 - Splash screen removed
 
 ### v0.19 (by Mewster)
