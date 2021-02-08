@@ -4,7 +4,7 @@ Tile Molester is a multi-format, user-extensible graphics data editor that lets 
 
 It was originally developed SnowBro and later improved by Central MiB and Lab313. Mewster merged those changes and updates into the original source code and added some other improvements as well, which I used as a base to add UI improvements.
 
-
+You can change the UI colors and icons theme in settings.xml.
 ## Changelog
 
 ### v0.20 (by toruzz)
