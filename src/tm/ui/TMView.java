@@ -26,65 +26,67 @@ import tm.canvases.TMEditorCanvas;
 import tm.tilecodecs.TileCodec;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Vector;
 
 /**
-*
-* A graphical view of a file image.
-*
-* The frame contains a panel that's used for rendering the tile data, and a
-* slider for keeping track of the file position. The keyboard can also
-* be used to change the file position (see class ViewKeyListener).
-* The filename is shown in the titlebar, along with a * when the file has been modified.
-*
-**/
+ *
+ * A graphical view of a file image.
+ *
+ * The frame contains a panel that's used for rendering the tile data, and a
+ * slider for keeping track of the file position. The keyboard can also be used
+ * to change the file position (see class ViewKeyListener). The filename is
+ * shown in the titlebar, along with a * when the file has been modified.
+ *
+ **/
 
 public class TMView extends JInternalFrame implements ChangeListener {
 	Color MenuBG = TMUI.MenuBG;
 	Color WindowBG = TMUI.WindowBG;
 	Color AsideBG = TMUI.AsideBG;
+	Color FrameBG = TMUI.FrameBG;
 	boolean isLinux = TMUI.isLinux;
 	boolean isWindows = TMUI.isWindows;
 
-    private static int frameCount = 0;
-    private JPanel contentPane = new JPanel();
-    public JSlider slider = new JSlider(JSlider.VERTICAL);
-    private JScrollPane scrollPane;
-    private TMEditorCanvas editorCanvas;
-    private TMUI ui;
-    private FileImage fileImage;
+	private static int frameCount = 0;
+	private JPanel contentPane = new JPanel();
+	public JSlider slider = new JSlider(JSlider.VERTICAL);
+	private JScrollPane scrollPane;
+	private TMEditorCanvas editorCanvas;
+	private TMUI ui;
+	private FileImage fileImage;
 
-    private int fgColor;
-    private int bgColor;
+	private int fgColor;
+	private int bgColor;
 
-    private int minOffset;  //
-    private int maxOffset;  // can't scroll past this
+	private int minOffset; //
+	private int maxOffset; // can't scroll past this
 
-    private boolean keysEnabled=true;
+	private boolean keysEnabled = true;
 
-    private Vector undoableActions = new Vector();
-    private Vector redoableActions = new Vector();
+	private Vector undoableActions = new Vector();
+	private Vector redoableActions = new Vector();
 
-    private boolean sizeBlockToCanvas=true;
+	private boolean sizeBlockToCanvas = true;
 
-/**
-*
-* Constructs a TMView for the given FileImage.
-*
-**/
+	/**
+	 *
+	 * Constructs a TMView for the given FileImage.
+	 *
+	 **/
 
-    public TMView(TMUI ui, FileImage fileImage, TileCodec tileCodec) {
-        super(fileImage.getName(), true, true, true, true);
-        this.ui = ui;
-        this.fileImage = fileImage;
-        fileImage.addView(this);
-        setDoubleBuffered(true);
-		//setBackground(Color.gray);
+	public TMView(TMUI ui, FileImage fileImage, TileCodec tileCodec) {
+		super(fileImage.getName(), true, true, true, true);
+		this.ui = ui;
+		this.fileImage = fileImage;
+		fileImage.addView(this);
+		setDoubleBuffered(true);
+		// setBackground(Color.gray);
 		setFrameIcon(null);
-		setBackground(MenuBG);
+		setBackground(Color.decode("#f0f0f0"));
 
         setDefaultCloseOperation(JInternalFrame.DO_NOTHING_ON_CLOSE);
 
@@ -108,7 +110,7 @@ public class TMView extends JInternalFrame implements ChangeListener {
         // init UI components
         // the panel containing the slider and editor canvas
 		//contentPane.setBackground(Color.gray);
-		contentPane.setBackground(AsideBG);
+		contentPane.setBackground(FrameBG);
         contentPane.setLayout(null);
         contentPane.setFocusable(true);
         contentPane.addKeyListener(new ViewKeyListener(this));
@@ -130,7 +132,8 @@ public class TMView extends JInternalFrame implements ChangeListener {
         slider.setFocusable(false);
         slider.setInverted(true);
 		contentPane.add(slider);
-		slider.setForeground(AsideBG);
+		slider.setForeground(FrameBG);
+		slider.setBackground(FrameBG);
 		
 		if(isLinux){
 			slider.setLocation(4, -14);

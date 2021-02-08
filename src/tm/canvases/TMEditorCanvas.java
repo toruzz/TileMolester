@@ -39,6 +39,7 @@ import java.awt.event.*;
 
 public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
 
+	
     // custom cursors
     private Cursor zoomCursor;
     private Cursor pickupCursor;
@@ -70,7 +71,9 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
     private int blockWidth=1;
     private int blockHeight=1;
     private boolean rowInterleaved=false;
-    private boolean showBlockGrid=false;
+	private boolean showBlockGrid=false;
+	
+	boolean DarkIcons = TMUI.DarkIcons;
 
 /**
 *
@@ -91,7 +94,9 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
         zoomCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("tm/icons/ZoomCursor24.gif")).getImage(), new Point(8,7), "Zoom");
         pickupCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("tm/icons/DropperCursor24.gif")).getImage(), new Point(6,19), "Dropper");
         brushCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("tm/icons/BrushCursor24.gif")).getImage(), new Point(5,19), "Brush");
-        fillCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("tm/icons/FillCursor24.gif")).getImage(), new Point(5,16), "Fill");
+		fillCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("tm/icons/FillCursor24.gif")).getImage(), new Point(5,16), "Fill");
+		
+
     }
 
 /**
@@ -101,10 +106,11 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
 **/
 
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+		super.paintComponent(g);
         drawBlockGrid(g);
         drawIntermediateSelection(g);
-    }
+	}
+	
 
 /**
 *

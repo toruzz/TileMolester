@@ -51,26 +51,37 @@ public class TMPalettePane extends JPanel implements MouseInputListener {
     private TMUI ui;
     private TMPaletteVizualiser vizualiser = new TMPaletteVizualiser();
     private ColorBox fgColorBox = new ColorBox();
-    private ColorBox bgColorBox = new ColorBox();
-
+	private ColorBox bgColorBox = new ColorBox();
+	
     ClassLoader cl = getClass().getClassLoader();
-    private Cursor pickupCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("tm/icons/Dropper24.png")).getImage(), new Point(8,23), "Dropper");
-    private JButton decButton = new JButton(new ImageIcon(cl.getResource("tm/icons/DecPalIndex24.png")));
-    private JButton incButton = new JButton(new ImageIcon(cl.getResource("tm/icons/IncPalIndex24.png")));
-    private JButton leftShiftButton = new JButton(new ImageIcon(cl.getResource("tm/icons/DecPalIndex24.png")));
-    private JButton rightShiftButton = new JButton(new ImageIcon(cl.getResource("tm/icons/IncPalIndex24.png")));
-    private JButton swapButton = new JButton(new ImageIcon(cl.getResource("tm/icons/Swap24.gif")));
-    private JTextField shiftValueField = new JTextField("1");
-/**
+    private Cursor pickupCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("tm/icons/DropperCursor24.gif")).getImage(), new Point(8,23), "Dropper");
+    private JButton decButton = new JButton(new ImageIcon(cl.getResource("tm/icons/light/DecPalIndex24.png")));
+    private JButton incButton = new JButton(new ImageIcon(cl.getResource("tm/icons/light/IncPalIndex24.png")));
+    private JButton leftShiftButton = new JButton(new ImageIcon(cl.getResource("tm/icons/light/DecPalIndex24.png")));
+    private JButton rightShiftButton = new JButton(new ImageIcon(cl.getResource("tm/icons/light/IncPalIndex24.png")));
+    private JButton swapButton = new JButton(new ImageIcon(cl.getResource("tm/icons/light/Swap24.png")));
+	
+	private JTextField shiftValueField = new JTextField("1");
+
+	/**
 *
 * Creates a palette pane.
 *
 **/
 
     public TMPalettePane(TMUI ui) {
+		boolean DarkIcons = TMUI.DarkIcons;
+		if(DarkIcons){
+    		decButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/DecPalIndex24.png")));
+    		incButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/IncPalIndex24.png")));
+    		leftShiftButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/DecPalIndex24.png")));
+    		rightShiftButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/IncPalIndex24.png")));
+    		swapButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Swap24.png")));
+		}
+
         this.ui = ui;
         vizualiser = new TMPaletteVizualiser();
-        setBorder(new EtchedBorder(EtchedBorder.RAISED));
+        //setBorder(new EtchedBorder(EtchedBorder.RAISED));
         swapButton.setBorder(null);
         // set up UI
         setLayout(null);    // no layout manager, want to place and size components pixel-perfect

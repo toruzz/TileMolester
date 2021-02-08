@@ -8,7 +8,9 @@
   <property key="recentFile" value="/home/ivan/Escritorio/Otros/Apps/TM200"/>
   <property key="recentFile" value="/home/ivan/Escritorio/Otros/DK94/DK94.gb"/>
   <property key="lastPath" value="/home/ivan/Escritorio/Otros/DK94"/>
-  <property key="MenuBG" value="#ff0000"/>
-  <property key="WindowBG" value="#0000ff"/>
-  <property key="AsideBG" value="#00ff00"/>
+  <property key="MenuBG" value="#1b2224"/>
+  <property key="WindowBG" value="#141a1b"/>
+  <property key="AsideBG" value="#1b2224"/>
+  <property key="FrameBG" value="#222b2e"/>
+  <property key="DarkIcons" value="false"/>
 </settings>

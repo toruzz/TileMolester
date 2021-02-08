@@ -130,50 +130,50 @@ public class TMUI extends JFrame {
 
     // toolbar buttons
     ClassLoader cl = getClass().getClassLoader();
-    private ToolButton newButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/New24.png")));
-    private ToolButton openButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Open24.png")));
-    private ToolButton saveButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Save24.png")));
-    private ToolButton cutButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Cut24.png")));
-    private ToolButton copyButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Copy24.png")));
-    private ToolButton pasteButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Paste24.png")));
-    private ToolButton undoButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Undo24.png")));
-    private ToolButton redoButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Redo24.png")));
-    private ToolButton gotoButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Import24.png")));
-    private ToolButton addBookmarkButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Bookmarks24.png")));
-    private ToolButton decWidthButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/DecWidth24.png")));
-    private ToolButton incWidthButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/IncWidth24.png")));
-    private ToolButton decHeightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/DecHeight24.png")));
-    private ToolButton incHeightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/IncHeight24.png")));
+    private ToolButton newButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/New24.png")));
+    private ToolButton openButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Open24.png")));
+    private ToolButton saveButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Save24.png")));
+    private ToolButton cutButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Cut24.png")));
+    private ToolButton copyButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Copy24.png")));
+    private ToolButton pasteButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Paste24.png")));
+    private ToolButton undoButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Undo24.png")));
+    private ToolButton redoButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Redo24.png")));
+    private ToolButton gotoButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Import24.png")));
+    private ToolButton addBookmarkButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Bookmarks24.png")));
+    private ToolButton decWidthButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/DecWidth24.png")));
+    private ToolButton incWidthButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/IncWidth24.png")));
+    private ToolButton decHeightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/DecHeight24.png")));
+    private ToolButton incHeightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/IncHeight24.png")));
 
     // navigation bar buttons
-    private ToolButton minusPageButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Rewind24.png")));
-    private ToolButton minusRowButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/StepBack24.png")));
-    private ToolButton minusTileButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Back24.png")));
-    private ToolButton minusByteButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Minus24.png")));
-    private ToolButton plusByteButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Plus24.png")));
-    private ToolButton plusTileButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Forward24.png")));
-    private ToolButton plusRowButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/StepForward24.png")));
-    private ToolButton plusPageButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/FastForward24.png")));
+    private ToolButton minusPageButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Rewind24.png")));
+    private ToolButton minusRowButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/StepBack24.png")));
+    private ToolButton minusTileButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Back24.png")));
+    private ToolButton minusByteButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Minus24.png")));
+    private ToolButton plusByteButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Plus24.png")));
+    private ToolButton plusTileButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Forward24.png")));
+    private ToolButton plusRowButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/StepForward24.png")));
+    private ToolButton plusPageButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/FastForward24.png")));
 
     // tool palette buttons
-    private ToolToggleButton selectButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Selection24.png")));
-    private ToolToggleButton zoomButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Zoom24.png")));
-    private ToolToggleButton pickupButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Dropper24.png")));
-    private ToolToggleButton brushButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Brush24.png")));
-    private ToolToggleButton lineButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Line24.png")));
-    private ToolToggleButton fillButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Fill24.png")));
-    private ToolToggleButton replaceButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/ColorReplacer24.png")));
-    private ToolToggleButton moveButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/Mover24.gif")));
+    private ToolToggleButton selectButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/light/Selection24.png")));
+    private ToolToggleButton zoomButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/light/Zoom24.png")));
+    private ToolToggleButton pickupButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/light/Dropper24.png")));
+    private ToolToggleButton brushButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/light/Brush24.png")));
+    private ToolToggleButton lineButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/light/Line24.png")));
+    private ToolToggleButton fillButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/light/Fill24.png")));
+    private ToolToggleButton replaceButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/light/ColorReplacer24.png")));
+    private ToolToggleButton moveButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/light/Mover24.gif")));
 
     // selection palette buttons
-    private ToolButton mirrorButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Mirror24.png")));
-    private ToolButton flipButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/Flip24.png")));
-    private ToolButton rotateRightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/RotateRight24.png")));
-    private ToolButton rotateLeftButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/RotateLeft24.png")));
-    private ToolButton shiftLeftButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/ShiftLeft24.png")));
-    private ToolButton shiftRightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/ShiftRight24.png")));
-    private ToolButton shiftUpButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/ShiftUp24.png")));
-    private ToolButton shiftDownButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/ShiftDown24.png")));
+    private ToolButton mirrorButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Mirror24.png")));
+    private ToolButton flipButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Flip24.png")));
+    private ToolButton rotateRightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/RotateRight24.png")));
+    private ToolButton rotateLeftButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/RotateLeft24.png")));
+    private ToolButton shiftLeftButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/ShiftLeft24.png")));
+    private ToolButton shiftRightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/ShiftRight24.png")));
+    private ToolButton shiftUpButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/ShiftUp24.png")));
+    private ToolButton shiftDownButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/ShiftDown24.png")));
 
     // File menu
     private JMenu fileMenu = new JMenu("File");
@@ -290,13 +290,16 @@ public class TMUI extends JFrame {
     private boolean viewToolBar=true;
 
     private String lastPath = "";
-	//public static Color MenuBG = Color.decode("#151b1c");
-	//public static Color WindowBG = Color.decode("#222b2e");
-	//public static Color AsideBG = Color.decode("#2d383b");
 	public static Color MenuBG = SystemColor.menu;
 	public static Color WindowBG = SystemColor.window;
 	public static Color AsideBG = SystemColor.desktop;
+	public static Color FrameBG = SystemColor.scrollbar;
+	public static boolean DarkIcons = false;
 
+
+	private Border emptyBorder = BorderFactory.createEmptyBorder();
+	private JSeparator separator = new JSeparator();
+	
 
 /**
 *
@@ -321,9 +324,9 @@ public class TMUI extends JFrame {
             e.printStackTrace();
         }*/
 
-        setIconImage(new ImageIcon(cl.getResource("tm/icons/TMIcon.gif")).getImage());
+		setIconImage(new ImageIcon(cl.getResource("tm/icons/TMIcon.gif")).getImage());
 
-        if (settingsFile.exists()) {
+		if (settingsFile.exists()) {
             // load settings from file
             loadSettings();
         }
@@ -378,7 +381,52 @@ public class TMUI extends JFrame {
         }
         setLocale(locale);
         Locale.setDefault(locale);
-        JComponent.setDefaultLocale(this.locale);
+		JComponent.setDefaultLocale(this.locale);
+		
+		if(DarkIcons){
+			newButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/New24.png")));
+			openButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Open24.png")));
+			saveButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Save24.png")));
+			cutButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Cut24.png")));
+			copyButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Copy24.png")));
+			pasteButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Paste24.png")));
+			undoButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Undo24.png")));
+			redoButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Redo24.png")));
+			gotoButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Import24.png")));
+			addBookmarkButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Bookmarks24.png")));
+			decWidthButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/DecWidth24.png")));
+			incWidthButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/IncWidth24.png")));
+			decHeightButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/DecHeight24.png")));
+			incHeightButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/IncHeight24.png")));
+			minusPageButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Rewind24.png")));
+			minusRowButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/StepBack24.png")));
+			minusTileButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Back24.png")));
+			minusByteButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Minus24.png")));
+			plusByteButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Plus24.png")));
+			plusTileButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Forward24.png")));
+			plusRowButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/StepForward24.png")));
+			plusPageButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/FastForward24.png")));
+			selectButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Selection24.png")));
+			zoomButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Zoom24.png")));
+			pickupButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Dropper24.png")));
+			brushButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Brush24.png")));
+			lineButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Line24.png")));
+			fillButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Fill24.png")));
+			replaceButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/ColorReplacer24.png")));
+			moveButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Mover24.gif")));
+			mirrorButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Mirror24.png")));
+			flipButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Flip24.png")));
+			rotateRightButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/RotateRight24.png")));
+			rotateLeftButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/RotateLeft24.png")));
+			shiftLeftButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/ShiftLeft24.png")));
+			shiftRightButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/ShiftRight24.png")));
+			shiftUpButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/ShiftUp24.png")));
+			shiftDownButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/ShiftDown24.png")));
+		}
+
+		separator.setForeground(Color.decode("#292929"));
+
+		//desktop.repaint();
 
         // show splash screen
         //new TMSplashScreen(this); // No need for a splash screen, it runs immediately on modern systems
@@ -592,7 +640,9 @@ public class TMUI extends JFrame {
         initToolPalette();
         initSelectionToolBar();
         JPanel barPane = new JPanel();
-        barPane.setLayout(new GridLayout(1, 2));
+		//barPane.setLayout(new GridLayout(1, 2));
+		
+		barPane.setBackground(AsideBG);
         barPane.add(selectionToolBar);
 		barPane.add(toolPalette);
 		toolPane.setBackground(AsideBG);
@@ -694,7 +744,9 @@ public class TMUI extends JFrame {
         sb.append(makePropertyTag("lastPath", lastPath));
         sb.append(makePropertyTag("MenuBG", "#"+Integer.toHexString(MenuBG.getRGB()).substring(2)));
         sb.append(makePropertyTag("WindowBG", "#"+Integer.toHexString(WindowBG.getRGB()).substring(2)));
-        sb.append(makePropertyTag("AsideBG", "#"+Integer.toHexString(AsideBG.getRGB()).substring(2)));
+		sb.append(makePropertyTag("AsideBG", "#"+Integer.toHexString(AsideBG.getRGB()).substring(2)));
+		sb.append(makePropertyTag("FrameBG", "#"+Integer.toHexString(FrameBG.getRGB()).substring(2)));
+        sb.append(makePropertyTag("DarkIcons", DarkIcons?"true":"false"));
 
         sb.append("</settings>\n");
 
@@ -784,6 +836,12 @@ public class TMUI extends JFrame {
             else if (key.equals("AsideBG")) {
                 AsideBG = Color.decode(value);
 			}
+            else if (key.equals("FrameBG")) {
+                FrameBG = Color.decode(value);
+			}
+			else if (key.equals("DarkIcons")) {
+                DarkIcons = value.equals("true");
+			}
 			
         }
     }
@@ -855,7 +913,8 @@ public class TMUI extends JFrame {
 		// New
 		//newButton.setUI(new CButtonUI());
 		//newButton.setContentAreaFilled(false);
-		newButton.repaint();
+		toolBar.setBorder(null);
+		newButton.setBackground(MenuBG);
 		
         newButton.setToolTipText(newMenuItem.getText());
         newButton.setFocusable(false);
@@ -867,7 +926,8 @@ public class TMUI extends JFrame {
             }
         );
         toolBar.add(newButton);
-        // Open
+		// Open
+		openButton.setBackground(MenuBG);
         openButton.setToolTipText(openMenuItem.getText());
         openButton.setFocusable(false);
         openButton.addActionListener(
@@ -878,7 +938,8 @@ public class TMUI extends JFrame {
             }
         );
         toolBar.add(openButton);
-        // Save
+		// Save
+		saveButton.setBackground(MenuBG);
         saveButton.setToolTipText(saveMenuItem.getText());
         saveButton.setFocusable(false);
         saveButton.addActionListener(
@@ -890,8 +951,9 @@ public class TMUI extends JFrame {
         );
         toolBar.add(saveButton);
         //
-        toolBar.addSeparator();
-        // Cut
+        toolBar.add(separator);
+		// Cut
+		cutButton.setBackground(MenuBG);
         cutButton.setToolTipText(cutMenuItem.getText());
         cutButton.setFocusable(false);
         cutButton.addActionListener(
@@ -902,7 +964,8 @@ public class TMUI extends JFrame {
             }
         );
         toolBar.add(cutButton);
-        // Copy
+		// Copy
+		copyButton.setBackground(MenuBG);
         copyButton.setToolTipText(copyMenuItem.getText());
         copyButton.setFocusable(false);
         copyButton.addActionListener(
@@ -913,7 +976,8 @@ public class TMUI extends JFrame {
             }
         );
         toolBar.add(copyButton);
-        // Paste
+		// Paste
+		pasteButton.setBackground(MenuBG);
         pasteButton.setToolTipText(pasteMenuItem.getText());
         pasteButton.setFocusable(false);
         pasteButton.addActionListener(
@@ -925,8 +989,9 @@ public class TMUI extends JFrame {
         );
         toolBar.add(pasteButton);
         //
-        toolBar.addSeparator();
-        // Undo
+        toolBar.add(separator);
+		// Undo
+		undoButton.setBackground(MenuBG);
         undoButton.setToolTipText(undoMenuItem.getText());
         undoButton.setFocusable(false);
         undoButton.addActionListener(
@@ -937,7 +1002,8 @@ public class TMUI extends JFrame {
             }
         );
         toolBar.add(undoButton);
-        // Redo
+		// Redo
+		redoButton.setBackground(MenuBG);
         redoButton.setToolTipText(redoMenuItem.getText());
         redoButton.setFocusable(false);
         redoButton.addActionListener(
@@ -949,8 +1015,9 @@ public class TMUI extends JFrame {
         );
         toolBar.add(redoButton);
         //
-        toolBar.addSeparator();
-        // Go To
+        toolBar.add(separator);
+		// Go To
+		gotoButton.setBackground(MenuBG);
         gotoButton.setToolTipText(goToMenuItem.getText());
         gotoButton.setFocusable(false);
         gotoButton.addActionListener(
@@ -961,7 +1028,8 @@ public class TMUI extends JFrame {
             }
         );
         toolBar.add(gotoButton);
-        // Add To Bookmarks...
+		// Add To Bookmarks...
+		addBookmarkButton.setBackground(MenuBG);
         addBookmarkButton.setToolTipText(addToBookmarksMenuItem.getText());
         addBookmarkButton.setFocusable(false);
         addBookmarkButton.addActionListener(
@@ -973,8 +1041,9 @@ public class TMUI extends JFrame {
         );
         toolBar.add(addBookmarkButton);
         //
-        toolBar.addSeparator();
-        // Decrease Width
+        toolBar.add(separator);
+		// Decrease Width
+		decWidthButton.setBackground(MenuBG);
         decWidthButton.setToolTipText(xlate("Decrease_Width"));
         decWidthButton.setFocusable(false);
         decWidthButton.addActionListener(
@@ -986,6 +1055,7 @@ public class TMUI extends JFrame {
         );
         toolBar.add(decWidthButton);
         // Increase Width
+        incWidthButton.setBackground(MenuBG);
         incWidthButton.setToolTipText(xlate("Increase_Width"));
         incWidthButton.setFocusable(false);
         incWidthButton.addActionListener(
@@ -997,6 +1067,7 @@ public class TMUI extends JFrame {
         );
         toolBar.add(incWidthButton);
         // Decrease Height
+        decHeightButton.setBackground(MenuBG);
         decHeightButton.setToolTipText(xlate("Decrease_Height"));
         decHeightButton.setFocusable(false);
         decHeightButton.addActionListener(
@@ -1008,6 +1079,7 @@ public class TMUI extends JFrame {
         );
         toolBar.add(decHeightButton);
         // Increase Height
+        incHeightButton.setBackground(MenuBG);
         incHeightButton.setToolTipText(xlate("Increase_Height"));
         incHeightButton.setFocusable(false);
         incHeightButton.addActionListener(
@@ -1030,7 +1102,10 @@ public class TMUI extends JFrame {
 **/
 
     public void initNavBar() {
-        // Page Back
+		navBar.setBorder(null);
+		
+		// Page Back
+        minusPageButton.setBackground(MenuBG);
         minusPageButton.setToolTipText(xlate("Page_Back"));
         minusPageButton.setFocusable(false);
         minusPageButton.addActionListener(
@@ -1042,6 +1117,7 @@ public class TMUI extends JFrame {
         );
         navBar.add(minusPageButton);
         // Page Forward
+        plusPageButton.setBackground(MenuBG);
         plusPageButton.setToolTipText(xlate("Page_Forward"));
         plusPageButton.setFocusable(false);
         plusPageButton.addActionListener(
@@ -1053,6 +1129,7 @@ public class TMUI extends JFrame {
         );
         navBar.add(plusPageButton);
         // Row Back
+        minusRowButton.setBackground(MenuBG);
         minusRowButton.setToolTipText(xlate("Row_Back"));
         minusRowButton.setFocusable(false);
         minusRowButton.addActionListener(
@@ -1064,6 +1141,7 @@ public class TMUI extends JFrame {
         );
         navBar.add(minusRowButton);
         // Row Forward
+        plusRowButton.setBackground(MenuBG);
         plusRowButton.setToolTipText(xlate("Row_Forward"));
         plusRowButton.setFocusable(false);
         plusRowButton.addActionListener(
@@ -1075,6 +1153,7 @@ public class TMUI extends JFrame {
         );
         navBar.add(plusRowButton);
         // Tile Back
+        minusTileButton.setBackground(MenuBG);
         minusTileButton.setToolTipText(xlate("Tile_Back"));
         minusTileButton.setFocusable(false);
         minusTileButton.addActionListener(
@@ -1086,6 +1165,7 @@ public class TMUI extends JFrame {
         );
         navBar.add(minusTileButton);
         // Tile Forward
+        plusTileButton.setBackground(MenuBG);
         plusTileButton.setToolTipText(xlate("Tile_Forward"));
         plusTileButton.setFocusable(false);
         plusTileButton.addActionListener(
@@ -1097,6 +1177,7 @@ public class TMUI extends JFrame {
         );
         navBar.add(plusTileButton);
         // Byte Back
+        minusByteButton.setBackground(MenuBG);
         minusByteButton.setToolTipText(xlate("Byte_Back"));
         minusByteButton.setFocusable(false);
         minusByteButton.addActionListener(
@@ -1108,6 +1189,7 @@ public class TMUI extends JFrame {
         );
         navBar.add(minusByteButton);
         // Byte Forward
+        plusByteButton.setBackground(MenuBG);
         plusByteButton.setToolTipText(xlate("Byte_Forward"));
         plusByteButton.setFocusable(false);
         plusByteButton.addActionListener(
@@ -1130,7 +1212,10 @@ public class TMUI extends JFrame {
 **/
 
     private void initToolPalette() {
+		toolPalette.setBorder(null);
+		toolPalette.setBackground(AsideBG);
         // Selection
+        selectButton.setBackground(AsideBG);
         selectButton.setToolTipText(xlate("Selection"));
         selectButton.setFocusable(false);
         selectButton.addActionListener(
@@ -1142,6 +1227,7 @@ public class TMUI extends JFrame {
         );
         toolPalette.add(selectButton);
         // Zoom
+        zoomButton.setBackground(AsideBG);
         zoomButton.setToolTipText(xlate("Zoom"));
         zoomButton.setFocusable(false);
         zoomButton.addActionListener(
@@ -1153,6 +1239,7 @@ public class TMUI extends JFrame {
         );
         toolPalette.add(zoomButton);
         // Dropper
+        pickupButton.setBackground(AsideBG);
         pickupButton.setToolTipText(xlate("Dropper"));
         pickupButton.setFocusable(false);
         pickupButton.addActionListener(
@@ -1164,6 +1251,7 @@ public class TMUI extends JFrame {
         );
         toolPalette.add(pickupButton);
         // Brush
+        brushButton.setBackground(AsideBG);
         brushButton.setToolTipText(xlate("Brush"));
         brushButton.setFocusable(false);
         brushButton.addActionListener(
@@ -1175,6 +1263,7 @@ public class TMUI extends JFrame {
         );
         toolPalette.add(brushButton);
         // Line
+        lineButton.setBackground(AsideBG);
         lineButton.setToolTipText(xlate("Line"));
         lineButton.setFocusable(false);
         lineButton.addActionListener(
@@ -1186,6 +1275,7 @@ public class TMUI extends JFrame {
         );
         toolPalette.add(lineButton);
         // Flood Fill
+        fillButton.setBackground(AsideBG);
         fillButton.setToolTipText(xlate("Flood_Fill"));
         fillButton.setFocusable(false);
         fillButton.addActionListener(
@@ -1197,6 +1287,7 @@ public class TMUI extends JFrame {
         );
         toolPalette.add(fillButton);
         // Color Replacer
+        replaceButton.setBackground(AsideBG);
         replaceButton.setToolTipText(xlate("Color_Replacer"));
         replaceButton.setFocusable(false);
         replaceButton.addActionListener(
@@ -1208,6 +1299,7 @@ public class TMUI extends JFrame {
         );
         toolPalette.add(replaceButton);
         // Mover
+        moveButton.setBackground(AsideBG);
         moveButton.setToolTipText(xlate("Mover"));
         moveButton.setFocusable(false);
         moveButton.addActionListener(
@@ -1241,7 +1333,9 @@ public class TMUI extends JFrame {
 **/
 
     public void initSelectionToolBar() {
+		selectionToolBar.setBorder(null);
         // Mirror
+        mirrorButton.setBackground(AsideBG);
         mirrorButton.setToolTipText(mirrorMenuItem.getText());
         mirrorButton.setFocusable(false);
         mirrorButton.addActionListener(
@@ -1253,6 +1347,7 @@ public class TMUI extends JFrame {
         );
         selectionToolBar.add(mirrorButton);
         // Flip
+        flipButton.setBackground(AsideBG);
         flipButton.setToolTipText(flipMenuItem.getText());
         flipButton.setFocusable(false);
         flipButton.addActionListener(
@@ -1264,6 +1359,7 @@ public class TMUI extends JFrame {
         );
         selectionToolBar.add(flipButton);
         // Rotate Right
+        rotateRightButton.setBackground(AsideBG);
         rotateRightButton.setToolTipText(rotateRightMenuItem.getText());
         rotateRightButton.setFocusable(false);
         rotateRightButton.addActionListener(
@@ -1275,6 +1371,7 @@ public class TMUI extends JFrame {
         );
         selectionToolBar.add(rotateRightButton);
         // Rotate Left
+        rotateLeftButton.setBackground(AsideBG);
         rotateLeftButton.setToolTipText(rotateLeftMenuItem.getText());
         rotateLeftButton.setFocusable(false);
         rotateLeftButton.addActionListener(
@@ -1286,6 +1383,7 @@ public class TMUI extends JFrame {
         );
         selectionToolBar.add(rotateLeftButton);
         // Shift Left
+        shiftLeftButton.setBackground(AsideBG);
         shiftLeftButton.setToolTipText(shiftLeftMenuItem.getText());
         shiftLeftButton.setFocusable(false);
         shiftLeftButton.addActionListener(
@@ -1297,6 +1395,7 @@ public class TMUI extends JFrame {
         );
         selectionToolBar.add(shiftLeftButton);
         // Shift Right
+        shiftRightButton.setBackground(AsideBG);
         shiftRightButton.setToolTipText(shiftRightMenuItem.getText());
         shiftRightButton.setFocusable(false);
         shiftRightButton.addActionListener(
@@ -1308,6 +1407,7 @@ public class TMUI extends JFrame {
         );
         selectionToolBar.add(shiftRightButton);
         // Shift Up
+        shiftUpButton.setBackground(AsideBG);
         shiftUpButton.setToolTipText(shiftUpMenuItem.getText());
         shiftUpButton.setFocusable(false);
         shiftUpButton.addActionListener(
@@ -1319,6 +1419,7 @@ public class TMUI extends JFrame {
         );
         selectionToolBar.add(shiftUpButton);
         // Shift Down
+        shiftDownButton.setBackground(AsideBG);
         shiftDownButton.setToolTipText(shiftDownMenuItem.getText());
         shiftDownButton.setFocusable(false);
         shiftDownButton.addActionListener(
@@ -1332,7 +1433,7 @@ public class TMUI extends JFrame {
         //
         selectionToolBar.setFloatable(false);
         selectionToolBar.setFocusable(false);
-        selectionToolBar.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        //selectionToolBar.setBorder(new BevelBorder(BevelBorder.LOWERED));
     }
 
 /**
@@ -1390,7 +1491,7 @@ public class TMUI extends JFrame {
         );
         fileMenu.add(closeAllMenuItem);
         //
-        //fileMenu.addSeparator();
+        //fileMenu.add(separator);
         // Save
         saveMenuItem.setMnemonic(KeyEvent.VK_S);
         saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
@@ -1423,7 +1524,7 @@ public class TMUI extends JFrame {
         );
         fileMenu.add(saveAllMenuItem);
         //
-        fileMenu.addSeparator();
+        fileMenu.add(separator);
         // Exit
         exitMenuItem.setMnemonic(KeyEvent.VK_X);
         exitMenuItem.addActionListener(
@@ -1460,7 +1561,7 @@ public class TMUI extends JFrame {
         );
         editMenu.add(redoMenuItem);
         //
-        editMenu.addSeparator();
+        editMenu.add(separator);
         // Cut
         cutMenuItem.setMnemonic(KeyEvent.VK_T);
         cutMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK));
@@ -1506,7 +1607,7 @@ public class TMUI extends JFrame {
         );
         editMenu.add(clearMenuItem);
         //
-        editMenu.addSeparator();
+        editMenu.add(separator);
         // Select All
         selectAllMenuItem.setMnemonic(KeyEvent.VK_S);
         selectAllMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
@@ -1519,7 +1620,7 @@ public class TMUI extends JFrame {
         );
         editMenu.add(selectAllMenuItem);
         //
-        editMenu.addSeparator();
+        editMenu.add(separator);
         // Copy To...
         copyToMenuItem.setMnemonic(KeyEvent.VK_O);
         copyToMenuItem.addActionListener(
@@ -1568,7 +1669,7 @@ public class TMUI extends JFrame {
         );
         zoomMenu.add(zoomOutMenuItem);
         //
-        zoomMenu.addSeparator();
+        zoomMenu.add(separator);
         // 100%
         _100MenuItem.setMnemonic(KeyEvent.VK_1);
         _100MenuItem.addActionListener(
@@ -1657,7 +1758,7 @@ public class TMUI extends JFrame {
         modeButtonGroup.add(_1DimensionalMenuItem);
         modeButtonGroup.add(_2DimensionalMenuItem);
         //
-        viewMenu.addSeparator();
+        viewMenu.add(separator);
         // Block Size
         blockSizeMenu.setMnemonic(KeyEvent.VK_B);
         // Full Canvas
@@ -1671,7 +1772,7 @@ public class TMUI extends JFrame {
         );
         blockSizeMenu.add(sizeBlockToCanvasMenuItem);
         //
-        blockSizeMenu.addSeparator();
+        blockSizeMenu.add(separator);
         // Custom Block Size
         customBlockSizeMenuItem.setMnemonic(KeyEvent.VK_C);
         customBlockSizeMenuItem.addActionListener(
@@ -1694,7 +1795,7 @@ public class TMUI extends JFrame {
         );
         viewMenu.add(rowInterleaveBlocksMenuItem);
         //
-        viewMenu.addSeparator();
+        viewMenu.add(separator);
         // Block Grid
         blockGridMenuItem.setMnemonic(KeyEvent.VK_V);
         blockGridMenuItem.addActionListener(
@@ -1726,7 +1827,7 @@ public class TMUI extends JFrame {
         );
         viewMenu.add(pixelGridMenuItem);
         //
-        viewMenu.addSeparator();
+        viewMenu.add(separator);
         // Statusbar
         statusBarMenuItem.setMnemonic(KeyEvent.VK_S);
         statusBarMenuItem.setSelected(viewStatusBar);
@@ -1775,7 +1876,7 @@ public class TMUI extends JFrame {
         );
         imageMenu.add(flipMenuItem);
         //
-        imageMenu.addSeparator();
+        imageMenu.add(separator);
         // Rotate Right
         rotateRightMenuItem.setMnemonic(KeyEvent.VK_O);
         rotateRightMenuItem.addActionListener(
@@ -1797,7 +1898,7 @@ public class TMUI extends JFrame {
         );
         imageMenu.add(rotateLeftMenuItem);
         //
-        imageMenu.addSeparator();
+        imageMenu.add(separator);
         // Shift Left
         shiftLeftMenuItem.setMnemonic(KeyEvent.VK_L);
 //        shiftLeftMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, Event.SHIFT_MASK));
@@ -1843,7 +1944,7 @@ public class TMUI extends JFrame {
         );
         imageMenu.add(shiftDownMenuItem);
         //
-        imageMenu.addSeparator();
+        imageMenu.add(separator);
         // Canvas Size...
         canvasSizeMenuItem.setMnemonic(KeyEvent.VK_S);
         canvasSizeMenuItem.addActionListener(
@@ -1890,7 +1991,7 @@ public class TMUI extends JFrame {
         );
         navigateMenu.add(goToAgainMenuItem);
         //
-        navigateMenu.addSeparator();
+        navigateMenu.add(separator);
         // Add To Bookmarks
         addToBookmarksMenuItem.setMnemonic(KeyEvent.VK_A);
         addToBookmarksMenuItem.addActionListener(
@@ -1966,7 +2067,7 @@ public class TMUI extends JFrame {
         );
         paletteMenu.add(paletteSizeMenuItem);
         //
-        paletteMenu.addSeparator();
+        paletteMenu.add(separator);
         // New...
         newPaletteMenuItem.setMnemonic(KeyEvent.VK_N);
         newPaletteMenuItem.addActionListener(
@@ -2001,7 +2102,7 @@ public class TMUI extends JFrame {
         importPaletteMenu.add(importExternalPaletteMenuItem);
         paletteMenu.add(importPaletteMenu);
         //
-        paletteMenu.addSeparator();
+        paletteMenu.add(separator);
         // Add To Palettes...
         addToPalettesMenuItem.setMnemonic(KeyEvent.VK_A);
         addToPalettesMenuItem.addActionListener(
@@ -2036,7 +2137,7 @@ public class TMUI extends JFrame {
         );
         windowMenu.add(newWindowMenuItem);
         //
-        windowMenu.addSeparator();
+        windowMenu.add(separator);
         // Tile
         tileMenuItem.setMnemonic(KeyEvent.VK_T);
         tileMenuItem.addActionListener(
@@ -3880,13 +3981,21 @@ public void doAboutCommand()
 		Insets insets=null;
 		
         public ToolButton(String text) {
-            super(text);
-            insets = new Insets(2,2,2,2);
+			super(text);
+			if(isWindows){
+				insets = new Insets(6,6,8,8);
+			}else{
+				insets = new Insets(4,4,5,5);
+			}
         }
         public ToolButton(ImageIcon icon) {
 			super(icon);
 			setBackground(MenuBG);
-            insets = new Insets(2,2,2,2);
+            if(isWindows){
+				insets = new Insets(6,6,8,8);
+			}else{
+				insets = new Insets(4,4,5,5);
+			}
         }
         public Insets getInsets() {
             return insets;
@@ -3904,12 +4013,20 @@ public void doAboutCommand()
         Insets insets=null;
         public ToolToggleButton(String text) {
             super(text);
-            insets = new Insets(2,2,2,2);
+            if(isWindows){
+				insets = new Insets(6,6,8,8);
+			}else{
+				insets = new Insets(4,4,5,5);
+			}
         }
         public ToolToggleButton(ImageIcon icon) {
 			super(icon);
-			setBackground(Color.MAGENTA);
-            insets = new Insets(2,2,2,2);
+			setBackground(MenuBG);
+            if(isWindows){
+				insets = new Insets(6,6,8,8);
+			}else{
+				insets = new Insets(4,4,5,5);
+			}
         }
         public Insets getInsets() {
             return insets;
@@ -4284,7 +4401,7 @@ public void doAboutCommand()
         }
         else {
             // add all the bookmarks
-            navigateMenu.addSeparator();
+            navigateMenu.add(separator);
             for (int i=0; i<children.length; i++) {
                 addToBookmarksMenu(children[i], navigateMenu);
             }
@@ -4373,7 +4490,7 @@ public void doAboutCommand()
         }
         else {
             // add all the palettes
-            paletteMenu.addSeparator();
+            paletteMenu.add(separator);
             for (int i=0; i<children.length; i++) {
                 addToPalettesMenu(children[i], paletteMenu);
             }
