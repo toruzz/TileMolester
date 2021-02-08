@@ -195,6 +195,9 @@
         <filefilter extensions="sch,cgx,bak" tileformat="CP02" mode="1D">
             <description>Character File (*.sch, *.cgx)</description>
         </filefilter>
+		<filefilter extensions="2bpp" tileformat="PL01" mode="1D">
+            <description>2bpp raw file (*.2bpp)</description>
+        </filefilter>
 
     </filefilters>
 
