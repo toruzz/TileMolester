@@ -6,7 +6,6 @@ It was originally developed SnowBro and later improved by Central MiB and Lab313
 
 
 ## Changelog
------
 
 ### v0.20 (by toruzz)
 - Native theme loading in Windows and Linux

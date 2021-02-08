@@ -1,5 +1,5 @@
 build
 dist
-compile.sh
 .vscode
 src/languages
+TileMolester.jar
