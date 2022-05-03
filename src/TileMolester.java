@@ -21,6 +21,9 @@ import javax.swing.UIManager;
 import tm.ui.TMUI;
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 
 /**
@@ -40,13 +43,18 @@ public class TileMolester {
 	*
 	**/
 
+	Logger mLog = Logger.getGlobal();
+
 	boolean isLinux = TMUI.isLinux;
+	boolean isMacOs = TMUI.isMacOs;
 	boolean isWindows = TMUI.isWindows;
 
     public TileMolester() {
 		try {
-			if(isLinux) UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");	
-			if(isWindows) UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");	
+			if(isLinux) UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+//			if(isMacOs) UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+			if(isMacOs) UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			if(isWindows) UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -18,6 +18,7 @@
 
 package tm.ui;
 
+import com.oracle.tools.packager.Log;
 import tm.*;
 import tm.colorcodecs.*;
 import tm.tilecodecs.*;
@@ -39,14 +40,14 @@ import javax.swing.plaf.ButtonUI;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.ToolBarUI;
 
-import java.util.Locale;
-import java.util.Vector;
-import java.util.Hashtable;
-import java.util.StringTokenizer;
+import java.util.*;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -65,19 +66,12 @@ public class TMUI extends JFrame {
 
 	private static String OS = System.getProperty("os.name").toLowerCase();
 	public static boolean isLinux = OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0;
+	public static boolean isMacOs = OS.indexOf("mac os x") >= 0;
 	public static boolean isWindows = OS.indexOf("win") >= 0;
 
     // tool types
-    public static final int SELECT_TOOL = 1;
-    public static final int ZOOM_TOOL = 2;
-    public static final int PICKUP_TOOL = 3;
-    public static final int BRUSH_TOOL = 4;
-    public static final int LINE_TOOL = 5;
-    public static final int FILL_TOOL = 6;
-    public static final int REPLACE_TOOL = 7;
-    public static final int MOVE_TOOL = 8;
+    public TMTools.ToolType toolType = TMTools.ToolType.SELECT_TOOL;
 
-    private int tool = SELECT_TOOL;
     private int previousTool;
 
     private int maxRecentFiles = 10;
@@ -130,50 +124,51 @@ public class TMUI extends JFrame {
 
     // toolbar buttons
     ClassLoader cl = getClass().getClassLoader();
-    private ToolButton newButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/New24.png")));
-    private ToolButton openButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Open24.png")));
-    private ToolButton saveButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Save24.png")));
-    private ToolButton cutButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Cut24.png")));
-    private ToolButton copyButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Copy24.png")));
-    private ToolButton pasteButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Paste24.png")));
-    private ToolButton undoButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Undo24.png")));
-    private ToolButton redoButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Redo24.png")));
-    private ToolButton gotoButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Import24.png")));
-    private ToolButton addBookmarkButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Bookmarks24.png")));
-    private ToolButton decWidthButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/DecWidth24.png")));
-    private ToolButton incWidthButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/IncWidth24.png")));
-    private ToolButton decHeightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/DecHeight24.png")));
-    private ToolButton incHeightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/IncHeight24.png")));
+
+    private ToolButton newButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/New24.png")));
+    private ToolButton openButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/Open24.png")));
+    private ToolButton saveButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/Save24.png")));
+    private ToolButton cutButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/Cut24.png")));
+    private ToolButton copyButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/Copy24.png")));
+    private ToolButton pasteButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/Paste24.png")));
+    private ToolButton undoButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/Undo24.png")));
+    private ToolButton redoButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/Redo24.png")));
+    private ToolButton gotoButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/Import24.png")));
+    private ToolButton addBookmarkButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/Bookmarks24.png")));
+    private ToolButton decWidthButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/DecWidth24.png")));
+    private ToolButton incWidthButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/IncWidth24.png")));
+    private ToolButton decHeightButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/DecHeight24.png")));
+    private ToolButton incHeightButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/IncHeight24.png")));
 
     // navigation bar buttons
-    private ToolButton minusPageButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Rewind24.png")));
-    private ToolButton minusRowButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/StepBack24.png")));
-    private ToolButton minusTileButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Back24.png")));
-    private ToolButton minusByteButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Minus24.png")));
-    private ToolButton plusByteButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Plus24.png")));
-    private ToolButton plusTileButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Forward24.png")));
-    private ToolButton plusRowButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/StepForward24.png")));
-    private ToolButton plusPageButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/FastForward24.png")));
+    private ToolButton minusPageButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/Rewind24.png")));
+    private ToolButton minusRowButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/StepBack24.png")));
+    private ToolButton minusTileButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/Back24.png")));
+    private ToolButton minusByteButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/Minus24.png")));
+    private ToolButton plusByteButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/Plus24.png")));
+    private ToolButton plusTileButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/Forward24.png")));
+    private ToolButton plusRowButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/StepForward24.png")));
+    private ToolButton plusPageButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/FastForward24.png")));
 
     // tool palette buttons
-    private ToolToggleButton selectButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/light/Selection24.png")));
-    private ToolToggleButton zoomButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/light/Zoom24.png")));
-    private ToolToggleButton pickupButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/light/Dropper24.png")));
-    private ToolToggleButton brushButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/light/Brush24.png")));
-    private ToolToggleButton lineButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/light/Line24.png")));
-    private ToolToggleButton fillButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/light/Fill24.png")));
-    private ToolToggleButton replaceButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/light/ColorReplacer24.png")));
-    private ToolToggleButton moveButton = new ToolToggleButton(new ImageIcon(cl.getResource("tm/icons/light/Mover24.gif")));
+    private ToolToggleButton selectButton = new ToolToggleButton(new ImageIcon(cl.getResource("icons/light/Selection24.png")));
+    private ToolToggleButton zoomButton = new ToolToggleButton(new ImageIcon(cl.getResource("icons/light/Zoom24.png")));
+    private ToolToggleButton pickupButton = new ToolToggleButton(new ImageIcon(cl.getResource("icons/light/Dropper24.png")));
+    private ToolToggleButton brushButton = new ToolToggleButton(new ImageIcon(cl.getResource("icons/light/Brush24.png")));
+    private ToolToggleButton lineButton = new ToolToggleButton(new ImageIcon(cl.getResource("icons/light/Line24.png")));
+    private ToolToggleButton fillButton = new ToolToggleButton(new ImageIcon(cl.getResource("icons/light/Fill24.png")));
+    private ToolToggleButton replaceButton = new ToolToggleButton(new ImageIcon(cl.getResource("icons/light/ColorReplacer24.png")));
+    private ToolToggleButton moveButton = new ToolToggleButton(new ImageIcon(cl.getResource("icons/light/Mover24.gif")));
 
     // selection palette buttons
-    private ToolButton mirrorButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Mirror24.png")));
-    private ToolButton flipButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/Flip24.png")));
-    private ToolButton rotateRightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/RotateRight24.png")));
-    private ToolButton rotateLeftButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/RotateLeft24.png")));
-    private ToolButton shiftLeftButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/ShiftLeft24.png")));
-    private ToolButton shiftRightButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/ShiftRight24.png")));
-    private ToolButton shiftUpButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/ShiftUp24.png")));
-    private ToolButton shiftDownButton = new ToolButton(new ImageIcon(cl.getResource("tm/icons/light/ShiftDown24.png")));
+    private ToolButton mirrorButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/Mirror24.png")));
+    private ToolButton flipButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/Flip24.png")));
+    private ToolButton rotateRightButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/RotateRight24.png")));
+    private ToolButton rotateLeftButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/RotateLeft24.png")));
+    private ToolButton shiftLeftButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/ShiftLeft24.png")));
+    private ToolButton shiftRightButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/ShiftRight24.png")));
+    private ToolButton shiftUpButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/ShiftUp24.png")));
+    private ToolButton shiftDownButton = new ToolButton(new ImageIcon(cl.getResource("icons/light/ShiftDown24.png")));
 
     // File menu
     private JMenu fileMenu = new JMenu("File");
@@ -301,6 +296,7 @@ public class TMUI extends JFrame {
 	private JSeparator separator = new JSeparator();
 	
 
+	private Logger uiLogger = Logger.getLogger("D_TMUI");
 /**
 *
 * Creates a Tile Molester UI.
@@ -308,23 +304,10 @@ public class TMUI extends JFrame {
 **/
 
     public TMUI() {
-
         super("Tile Molester");
 
-        //I tried to change the UI but it seems innatural
-        /*try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        }*/
-
-		setIconImage(new ImageIcon(cl.getResource("tm/icons/TMIcon.gif")).getImage());
+        ImageIcon imgIcon = new ImageIcon(cl.getResource("icons/TMIcon.gif"));
+		setIconImage(imgIcon.getImage());
 
 		if (settingsFile.exists()) {
             // load settings from file
@@ -384,44 +367,44 @@ public class TMUI extends JFrame {
 		JComponent.setDefaultLocale(this.locale);
 		
 		if(DarkIcons){
-			newButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/New24.png")));
-			openButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Open24.png")));
-			saveButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Save24.png")));
-			cutButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Cut24.png")));
-			copyButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Copy24.png")));
-			pasteButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Paste24.png")));
-			undoButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Undo24.png")));
-			redoButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Redo24.png")));
-			gotoButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Import24.png")));
-			addBookmarkButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Bookmarks24.png")));
-			decWidthButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/DecWidth24.png")));
-			incWidthButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/IncWidth24.png")));
-			decHeightButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/DecHeight24.png")));
-			incHeightButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/IncHeight24.png")));
-			minusPageButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Rewind24.png")));
-			minusRowButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/StepBack24.png")));
-			minusTileButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Back24.png")));
-			minusByteButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Minus24.png")));
-			plusByteButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Plus24.png")));
-			plusTileButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Forward24.png")));
-			plusRowButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/StepForward24.png")));
-			plusPageButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/FastForward24.png")));
-			selectButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Selection24.png")));
-			zoomButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Zoom24.png")));
-			pickupButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Dropper24.png")));
-			brushButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Brush24.png")));
-			lineButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Line24.png")));
-			fillButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Fill24.png")));
-			replaceButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/ColorReplacer24.png")));
-			moveButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Mover24.gif")));
-			mirrorButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Mirror24.png")));
-			flipButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Flip24.png")));
-			rotateRightButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/RotateRight24.png")));
-			rotateLeftButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/RotateLeft24.png")));
-			shiftLeftButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/ShiftLeft24.png")));
-			shiftRightButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/ShiftRight24.png")));
-			shiftUpButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/ShiftUp24.png")));
-			shiftDownButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/ShiftDown24.png")));
+			newButton.setIcon(new ImageIcon(cl.getResource("icons/dark/New24.png")));
+			openButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Open24.png")));
+			saveButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Save24.png")));
+			cutButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Cut24.png")));
+			copyButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Copy24.png")));
+			pasteButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Paste24.png")));
+			undoButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Undo24.png")));
+			redoButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Redo24.png")));
+			gotoButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Import24.png")));
+			addBookmarkButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Bookmarks24.png")));
+			decWidthButton.setIcon(new ImageIcon(cl.getResource("icons/dark/DecWidth24.png")));
+			incWidthButton.setIcon(new ImageIcon(cl.getResource("icons/dark/IncWidth24.png")));
+			decHeightButton.setIcon(new ImageIcon(cl.getResource("icons/dark/DecHeight24.png")));
+			incHeightButton.setIcon(new ImageIcon(cl.getResource("icons/dark/IncHeight24.png")));
+			minusPageButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Rewind24.png")));
+			minusRowButton.setIcon(new ImageIcon(cl.getResource("icons/dark/StepBack24.png")));
+			minusTileButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Back24.png")));
+			minusByteButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Minus24.png")));
+			plusByteButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Plus24.png")));
+			plusTileButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Forward24.png")));
+			plusRowButton.setIcon(new ImageIcon(cl.getResource("icons/dark/StepForward24.png")));
+			plusPageButton.setIcon(new ImageIcon(cl.getResource("icons/dark/FastForward24.png")));
+			selectButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Selection24.png")));
+			zoomButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Zoom24.png")));
+			pickupButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Dropper24.png")));
+			brushButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Brush24.png")));
+			lineButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Line24.png")));
+			fillButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Fill24.png")));
+			replaceButton.setIcon(new ImageIcon(cl.getResource("icons/dark/ColorReplacer24.png")));
+			moveButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Mover24.gif")));
+			mirrorButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Mirror24.png")));
+			flipButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Flip24.png")));
+			rotateRightButton.setIcon(new ImageIcon(cl.getResource("icons/dark/RotateRight24.png")));
+			rotateLeftButton.setIcon(new ImageIcon(cl.getResource("icons/dark/RotateLeft24.png")));
+			shiftLeftButton.setIcon(new ImageIcon(cl.getResource("icons/dark/ShiftLeft24.png")));
+			shiftRightButton.setIcon(new ImageIcon(cl.getResource("icons/dark/ShiftRight24.png")));
+			shiftUpButton.setIcon(new ImageIcon(cl.getResource("icons/dark/ShiftUp24.png")));
+			shiftDownButton.setIcon(new ImageIcon(cl.getResource("icons/dark/ShiftDown24.png")));
 		}
 
 		separator.setForeground(Color.decode("#292929"));
@@ -1223,7 +1206,7 @@ public class TMUI extends JFrame {
         selectButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    tool = SELECT_TOOL;
+                    toolType.equals(TMTools.ToolType.SELECT_TOOL);
                 }
             }
         );
@@ -1235,7 +1218,7 @@ public class TMUI extends JFrame {
         zoomButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    tool = ZOOM_TOOL;
+                    toolType.equals(TMTools.ToolType.ZOOM_TOOL);
                 }
             }
         );
@@ -1247,7 +1230,7 @@ public class TMUI extends JFrame {
         pickupButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    tool = PICKUP_TOOL;
+                    toolType.equals(TMTools.ToolType.PICKUP_TOOL);
                 }
             }
         );
@@ -1259,7 +1242,7 @@ public class TMUI extends JFrame {
         brushButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    tool = BRUSH_TOOL;
+                    toolType.equals(TMTools.ToolType.BRUSH_TOOL);
                 }
             }
         );
@@ -1271,7 +1254,7 @@ public class TMUI extends JFrame {
         lineButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    tool = LINE_TOOL;
+                    toolType.equals(TMTools.ToolType.LINE_TOOL);
                 }
             }
         );
@@ -1283,7 +1266,7 @@ public class TMUI extends JFrame {
         fillButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    tool = FILL_TOOL;
+                    toolType.equals(TMTools.ToolType.FILL_TOOL);
                 }
             }
         );
@@ -1295,7 +1278,7 @@ public class TMUI extends JFrame {
         replaceButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    tool = REPLACE_TOOL;
+                    toolType.equals(TMTools.ToolType.REPLACE_TOOL);
                 }
             }
         );
@@ -1307,7 +1290,7 @@ public class TMUI extends JFrame {
         moveButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    tool = MOVE_TOOL;
+                    toolType.equals(TMTools.ToolType.MOVE_TOOL);
                 }
             }
         );
@@ -4109,9 +4092,8 @@ public void doAboutCommand()
 * Gets the current tool.
 *
 **/
-
-    public int getTool() {
-        return tool;
+    public TMTools.ToolType getToolType() {
+        return toolType;
     }
 
 /**
@@ -4928,7 +4910,7 @@ public void doAboutCommand()
 
     public void selectLanguage() {
         // figure out available translations
-        File dir = new File("./languages");
+        File dir = new File("languages");
         File[] files = dir.listFiles(new PropertiesFilter());
         if ((files != null) && (files.length > 0)) {
             Locale[] locales = new Locale[files.length];
