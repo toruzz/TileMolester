@@ -54,12 +54,12 @@ public class TMPalettePane extends JPanel implements MouseInputListener {
 	private ColorBox bgColorBox = new ColorBox();
 	
     ClassLoader cl = getClass().getClassLoader();
-    private Cursor pickupCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("tm/icons/DropperCursor24.gif")).getImage(), new Point(8,23), "Dropper");
-    private JButton decButton = new JButton(new ImageIcon(cl.getResource("tm/icons/light/DecPalIndex24.png")));
-    private JButton incButton = new JButton(new ImageIcon(cl.getResource("tm/icons/light/IncPalIndex24.png")));
-    private JButton leftShiftButton = new JButton(new ImageIcon(cl.getResource("tm/icons/light/DecPalIndex24.png")));
-    private JButton rightShiftButton = new JButton(new ImageIcon(cl.getResource("tm/icons/light/IncPalIndex24.png")));
-    private JButton swapButton = new JButton(new ImageIcon(cl.getResource("tm/icons/light/Swap24.png")));
+    private Cursor pickupCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("icons/DropperCursor24.gif")).getImage(), new Point(8,23), "Dropper");
+    private JButton decButton = new JButton(new ImageIcon(cl.getResource("icons/light/DecPalIndex24.png")));
+    private JButton incButton = new JButton(new ImageIcon(cl.getResource("icons/light/IncPalIndex24.png")));
+    private JButton leftShiftButton = new JButton(new ImageIcon(cl.getResource("icons/light/DecPalIndex24.png")));
+    private JButton rightShiftButton = new JButton(new ImageIcon(cl.getResource("icons/light/IncPalIndex24.png")));
+    private JButton swapButton = new JButton(new ImageIcon(cl.getResource("icons/light/Swap24.png")));
 	
 	private JTextField shiftValueField = new JTextField("1");
 
@@ -72,11 +72,11 @@ public class TMPalettePane extends JPanel implements MouseInputListener {
     public TMPalettePane(TMUI ui) {
 		boolean DarkIcons = TMUI.DarkIcons;
 		if(DarkIcons){
-    		decButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/DecPalIndex24.png")));
-    		incButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/IncPalIndex24.png")));
-    		leftShiftButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/DecPalIndex24.png")));
-    		rightShiftButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/IncPalIndex24.png")));
-    		swapButton.setIcon(new ImageIcon(cl.getResource("tm/icons/dark/Swap24.png")));
+    		decButton.setIcon(new ImageIcon(cl.getResource("icons/dark/DecPalIndex24.png")));
+    		incButton.setIcon(new ImageIcon(cl.getResource("icons/dark/IncPalIndex24.png")));
+    		leftShiftButton.setIcon(new ImageIcon(cl.getResource("icons/dark/DecPalIndex24.png")));
+    		rightShiftButton.setIcon(new ImageIcon(cl.getResource("icons/dark/IncPalIndex24.png")));
+    		swapButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Swap24.png")));
 		}
 
         this.ui = ui;

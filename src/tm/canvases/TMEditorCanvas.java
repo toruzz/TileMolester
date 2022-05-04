@@ -24,6 +24,8 @@ import tm.ui.TMView;
 import tm.tilecodecs.TileCodec;
 import tm.treenodes.*;
 import tm.reversibleaction.*;
+import tm.utils.TMTools;
+
 import java.nio.IntBuffer;
 import java.util.Vector;
 import javax.swing.*;
@@ -53,7 +55,7 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
     private int selX1, selY1, selX2, selY2;
 
     private int lineX1, lineY1, lineX2, lineY2;
-    private int drawColor;
+    private int colorDraw;
     private int filledColor;
     private int currentCol=0, currentRow=0;
 
@@ -91,10 +93,10 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
 
         // create custom cursors
         ClassLoader cl = getClass().getClassLoader();
-        zoomCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("tm/icons/ZoomCursor24.gif")).getImage(), new Point(8,7), "Zoom");
-        pickupCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("tm/icons/DropperCursor24.gif")).getImage(), new Point(6,19), "Dropper");
-        brushCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("tm/icons/BrushCursor24.gif")).getImage(), new Point(5,19), "Brush");
-		fillCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("tm/icons/FillCursor24.gif")).getImage(), new Point(5,16), "Fill");
+        zoomCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("icons/ZoomCursor24.gif")).getImage(), new Point(8,7), "Zoom");
+        pickupCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("icons/DropperCursor24.gif")).getImage(), new Point(6,19), "Dropper");
+        brushCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("icons/BrushCursor24.gif")).getImage(), new Point(5,19), "Brush");
+		fillCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("icons/FillCursor24.gif")).getImage(), new Point(5,16), "Fill");
 		
 
     }
@@ -184,29 +186,29 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
 
     public void mouseEntered(MouseEvent e) {
         setToolTipText("");
-        int tool = ui.getTool();
-        if (tool == TMUI.SELECT_TOOL) {
+        TMTools.ToolType tool = ui.getToolType();
+        if (tool.equals(TMTools.ToolType.SELECT_TOOL)) {
             setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
         }
-        else if (tool == TMUI.ZOOM_TOOL) {
+        else if (tool.equals(TMTools.ToolType.ZOOM_TOOL)) {
             setCursor(zoomCursor);
         }
-        else if (tool == TMUI.PICKUP_TOOL) {
+        else if (tool.equals(TMTools.ToolType.PICKUP_TOOL)) {
             setCursor(pickupCursor);
         }
-        else if (tool == TMUI.BRUSH_TOOL) {
+        else if (tool.equals(TMTools.ToolType.BRUSH_TOOL)) {
             setCursor(brushCursor);
         }
-        else if (tool == TMUI.LINE_TOOL) {
+        else if (tool.equals(TMTools.ToolType.LINE_TOOL)) {
             setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
         }
-        else if (tool == TMUI.FILL_TOOL) {
+        else if (tool.equals(TMTools.ToolType.FILL_TOOL)) {
             setCursor(fillCursor);
         }
-        else if (tool == TMUI.REPLACE_TOOL) {
+        else if (tool.equals(TMTools.ToolType.REPLACE_TOOL)) {
             setCursor(brushCursor);
         }
-        else if (tool == TMUI.MOVE_TOOL) {
+        else if (tool.equals(TMTools.ToolType.MOVE_TOOL)) {
             setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         }
     }
@@ -235,92 +237,87 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
             maybeApplySelection();
 //        }
         // get the current tool
-        int tool = ui.getTool();
+        TMTools.ToolType tool = ui.getToolType();
         // get pixel coordinate
         int x = (int)(e.getX() / scale);
         int y = (int)(e.getY() / scale);
 
-        if (tool == TMUI.SELECT_TOOL) {
-            // figure out starting (x,y) tile coords
-            selX1 = x / 8;
-            selY1 = y / 8;
-            //
-            isSelecting = false;
-            repaint();
-        }
-
-        else if (tool == TMUI.ZOOM_TOOL) {
-            if (e.getButton() == MouseEvent.BUTTON1) {
-                ui.doZoomInCommand();
-            }
-            else {
-                ui.doZoomOutCommand();
-            }
-        }
-
-        else if (tool == TMUI.PICKUP_TOOL) {
-            // get pixel under cursor
-            int color = getPixel(x, y);
-            if (e.getButton() == MouseEvent.BUTTON1) {
-                // set as foreground color
-                ui.setFGColor(color);
-            }
-            else {
-                // set as background color
-                ui.setBGColor(color);
-            }
-        }
-
-        else if (tool == TMUI.BRUSH_TOOL) {
-            drawColor = getDrawColor(e.getButton());
-            drawLine(x, y, x, y, true);
-            redraw();
-            lineX1 = x;
-            lineY1 = y;
-        }
-
-        else if (tool == TMUI.LINE_TOOL) {
-            drawColor = getDrawColor(e.getButton());
-            drawLine(x, y, x, y, false);
-            redraw();
-            lineX1 = x;
-            lineY1 = y;
-            lineX2 = x;
-            lineY2 = y;
-            isDrawingLine = true;
-        }
-
-        else if (tool == TMUI.FILL_TOOL) {
-            // get pixel under cursor
-            int color = getPixel(x, y);
-            // get draw color
-            drawColor = getDrawColor(e.getButton());
-            if (drawColor != color) {
-                // fill!
-                filledColor = color;
-                // fillRecursive(x, y);
-                floodFill(x, y);
-                commitDrawingOperation("Flood Fill");   // i18n
-            }
-        }
-
-        else if (tool == TMUI.REPLACE_TOOL) {
-            // get pixel under cursor
-            int color = getPixel(x, y);
-            drawColor = getDrawColor(e.getButton());
-            // replace all occurences of color
-            for (int i=0; i<canvasHeight; i++) {
-                for (int j=0; j<canvasWidth; j++) {
-                    if (getPixel(j, i) == color) {
-                        setPixelTraceable(j, i, drawColor);
+        switch (tool) {
+            case SELECT_TOOL:
+                // figure out starting (x,y) tile coords
+                selX1 = x / 8;
+                selY1 = y / 8;
+                //
+                isSelecting = false;
+                repaint();
+                break;
+            case ZOOM_TOOL:
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    ui.doZoomInCommand();
+                }
+                else {
+                    ui.doZoomOutCommand();
+                }
+                break;
+            case PICKUP_TOOL:
+                // get pixel under cursor
+                int colorPickup = getPixel(x, y);
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    // set as foreground color
+                    ui.setFGColor(colorPickup);
+                }
+                else {
+                    // set as background color
+                    ui.setBGColor(colorPickup);
+                }
+                break;
+            case BRUSH_TOOL:
+                colorDraw = getDrawColor(e.getButton());
+                drawLine(x, y, x, y, true);
+                redraw();
+                lineX1 = x;
+                lineY1 = y;
+                break;
+            case LINE_TOOL:
+                colorDraw = getDrawColor(e.getButton());
+                drawLine(x, y, x, y, false);
+                redraw();
+                lineX1 = x;
+                lineY1 = y;
+                lineX2 = x;
+                lineY2 = y;
+                isDrawingLine = true;
+                break;
+            case FILL_TOOL:
+                // get pixel under cursor
+                int colorFill = getPixel(x, y);
+                // get draw color
+                colorDraw = getDrawColor(e.getButton());
+                if (colorDraw != colorFill) {
+                    // fill!
+                    filledColor = colorFill;
+                    // fillRecursive(x, y);
+                    floodFill(x, y);
+                    commitDrawingOperation("Flood Fill");   // i18n
+                }
+                break;
+            case REPLACE_TOOL:
+                // get pixel under cursor
+                int colorRplace = getPixel(x, y);
+                colorDraw = getDrawColor(e.getButton());
+                // replace all occurences of color
+                for (int i=0; i<canvasHeight; i++) {
+                    for (int j=0; j<canvasWidth; j++) {
+                        if (getPixel(j, i) == colorRplace) {
+                            setPixelTraceable(j, i, colorDraw);
+                        }
                     }
                 }
-            }
-            commitDrawingOperation("Color Replace");    // i18n
-        }
-
-        else if (tool == TMUI.MOVE_TOOL) {
-            moveMousePoint = new Point(e.getPoint());
+                commitDrawingOperation("Color Replace");    // i18n
+                break;
+            case MOVE_TOOL:
+                moveMousePoint = new Point(e.getPoint());
+                break;
         }
     }
 
@@ -332,7 +329,7 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
 
     public void mouseDragged(MouseEvent e) {
         // get the current tool
-        int tool = ui.getTool();
+        TMTools.ToolType tool = ui.getToolType();
         // get pixel coordinate
         int x = (int)(e.getX() / scale);
         int y = (int)(e.getY() / scale);
@@ -350,72 +347,60 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
             y = canvasHeight - 1;
         }
 
-        if (tool == TMUI.SELECT_TOOL) {
-            isSelecting = true;
-            // update selection
-            selX2 = x / 8;
-            selY2 = y / 8;
-            //
-            repaint();
-        }
-
-        else if (tool == TMUI.ZOOM_TOOL) {
-        }
-
-        else if (tool == TMUI.PICKUP_TOOL) {
-        }
-
-        else if (tool == TMUI.BRUSH_TOOL) {
-            drawLine(lineX1, lineY1, x, y, true);
-            redraw();
-            lineX1 = x;
-            lineY1 = y;
-        }
-
-        else if (tool == TMUI.LINE_TOOL) {
-            if (isDrawingLine) {
-                if ((x != lineX2) || (y != lineY2)) {   // only if coordinates changed...
-                    // "erase" old line
-                    drawLine(lineX1, lineY1, lineX2, lineY2, false);
-                    // draw new line
-                    drawLine(lineX1, lineY1, x, y, false);
-                    lineX2 = x;
-                    lineY2 = y;
-                    redraw();
+        switch (tool) {
+            case SELECT_TOOL:
+                isSelecting = true;
+                // update selection
+                selX2 = x / 8;
+                selY2 = y / 8;
+                //
+                repaint();
+                break;
+            case BRUSH_TOOL:
+                drawLine(lineX1, lineY1, x, y, true);
+                redraw();
+                lineX1 = x;
+                lineY1 = y;
+                break;
+            case LINE_TOOL:
+                if (isDrawingLine) {
+                    if ((x != lineX2) || (y != lineY2)) {   // only if coordinates changed...
+                        // "erase" old line
+                        drawLine(lineX1, lineY1, lineX2, lineY2, false);
+                        // draw new line
+                        drawLine(lineX1, lineY1, x, y, false);
+                        lineX2 = x;
+                        lineY2 = y;
+                        redraw();
+                    }
                 }
-            }
-        }
+            case MOVE_TOOL:
+                Point p = e.getPoint();
+                int dx = p.x - moveMousePoint.x;
+                int dy = p.y - moveMousePoint.y;
 
-        else if (tool == TMUI.FILL_TOOL) {
-        }
+                TMView view = (TMView)ui.getDesktop().getSelectedFrame();
+                JScrollBar hsb = view.getScrollPane().getHorizontalScrollBar();
+                JScrollBar vsb = view.getScrollPane().getVerticalScrollBar();
+                int newXpos = hsb.getValue() + dx;
+                int newYpos = vsb.getValue() + dy;
 
-        else if (tool == TMUI.REPLACE_TOOL) {
-        }
+                if (newXpos < hsb.getMinimum()) newXpos = hsb.getMinimum();
+                else if (newXpos > hsb.getMaximum()) newXpos = hsb.getMaximum();
+                if (newYpos < vsb.getMinimum()) newYpos = vsb.getMinimum();
+                else if (newYpos > vsb.getMaximum()) newYpos = vsb.getMaximum();
 
-        else if (tool == TMUI.MOVE_TOOL) {
-            Point p = e.getPoint();
-            int dx = p.x - moveMousePoint.x;
-            int dy = p.y - moveMousePoint.y;
+                hsb.setValue(newXpos);
+                hsb.revalidate();
+                vsb.setValue(newYpos);
+                vsb.revalidate();
+                view.getScrollPane().revalidate();
+                view.revalidate();
 
-            TMView view = (TMView)ui.getDesktop().getSelectedFrame();
-            JScrollBar hsb = view.getScrollPane().getHorizontalScrollBar();
-            JScrollBar vsb = view.getScrollPane().getVerticalScrollBar();
-            int newXpos = hsb.getValue() + dx;
-            int newYpos = vsb.getValue() + dy;
-
-            if (newXpos < hsb.getMinimum()) newXpos = hsb.getMinimum();
-            else if (newXpos > hsb.getMaximum()) newXpos = hsb.getMaximum();
-            if (newYpos < vsb.getMinimum()) newYpos = vsb.getMinimum();
-            else if (newYpos > vsb.getMaximum()) newYpos = vsb.getMaximum();
-
-            hsb.setValue(newXpos);
-            hsb.revalidate();
-            vsb.setValue(newYpos);
-            vsb.revalidate();
-            view.getScrollPane().revalidate();
-            view.revalidate();
-
-            moveMousePoint = new Point(p);
+                moveMousePoint = new Point(p);
+                break;
+            default:
+                break;
         }
 
         // update status bar coords
@@ -432,67 +417,54 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
 
     public void mouseReleased(MouseEvent e) {
         // get the current tool
-        int tool = ui.getTool();
+        TMTools.ToolType tool = ui.getToolType();
 
-        if (tool == TMUI.SELECT_TOOL) {
-            if (isSelecting) {
-                // end selection
-                isSelecting = false;
-                if (selX1 > selX2) {
-                    // swap
-                    int temp = selX1;
-                    selX1 = selX2;
-                    selX2 = temp;
+        switch (tool) {
+            case SELECT_TOOL:
+                if (isSelecting) {
+                    // end selection
+                    isSelecting = false;
+                    if (selX1 > selX2) {
+                        // swap
+                        int temp = selX1;
+                        selX1 = selX2;
+                        selX2 = temp;
+                    }
+                    if (selY1 > selY2) {
+                        // swap
+                        int temp = selY1;
+                        selY1 = selY2;
+                        selY2 = temp;
+                    }
+
+                    makeSelection(selX1, selY1, selX2-selX1+1, selY2-selY1+1);
+
+                    view.addReversibleAction(
+                        new ReversibleNewSelectionAction(selectionCanvas,this)
+                    );
+
                 }
-                if (selY1 > selY2) {
-                    // swap
-                    int temp = selY1;
-                    selY1 = selY2;
-                    selY2 = temp;
+                else {
+                    // encode selection, if there is one
+                    // TODO: what is this doing here?
                 }
-
-                makeSelection(selX1, selY1, selX2-selX1+1, selY2-selY1+1);
-
-                view.addReversibleAction(
-                    new ReversibleNewSelectionAction(selectionCanvas,this)
-                );
-
-            }
-            else {
-                // encode selection, if there is one
-            }
-            if (hasSelection()) {
-                selectionCanvas.maybeShowPopup(e);
-            }
+                if (hasSelection()) {
+                    selectionCanvas.maybeShowPopup(e);
+                }
+                break;
+            case BRUSH_TOOL:
+                commitDrawingOperation("Brush");    // i18n
+                break;
+            case LINE_TOOL:
+                drawLine(lineX1, lineY1, lineX2, lineY2, false);
+                // draw the final line
+                isDrawingLine = false;
+                drawLine(lineX1, lineY1, lineX2, lineY2, true);
+                commitDrawingOperation("Line"); // i18n
+                break;
+            default:
+                break;
         }
-
-        else if (tool == TMUI.ZOOM_TOOL) {
-        }
-
-        else if (tool == TMUI.PICKUP_TOOL) {
-        }
-
-        else if (tool == TMUI.BRUSH_TOOL) {
-            commitDrawingOperation("Brush");    // i18n
-        }
-
-        else if (tool == TMUI.LINE_TOOL) {
-            drawLine(lineX1, lineY1, lineX2, lineY2, false);
-            // draw the final line
-            isDrawingLine = false;
-            drawLine(lineX1, lineY1, lineX2, lineY2, true);
-            commitDrawingOperation("Line"); // i18n
-        }
-
-        else if (tool == TMUI.FILL_TOOL) {
-        }
-
-        else if (tool == TMUI.REPLACE_TOOL) {
-        }
-
-        else if (tool == TMUI.MOVE_TOOL) {
-        }
-
         // enabled keyboard events again
         view.setKeysEnabled(true);
     }
@@ -504,13 +476,11 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
 **/
 
     public void mouseMoved(MouseEvent e) {
-        // get the current tool
-        int tool = ui.getTool();
         // get pixel coordinate
         int x = (int)(e.getX() / scale);
         int y = (int)(e.getY() / scale);
 
-        if (tool == TMUI.PICKUP_TOOL) {
+        if (ui.getToolType().equals(TMTools.ToolType.PICKUP_TOOL)) {
             // get pixel under cursor
             int color = getPixel(x, y);
             int r = (color >> 16) & 0xFF;
@@ -538,20 +508,20 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
             Point p = (Point)seeds.remove(0);
             x = p.x;
             y = p.y;
-            if (getPixel(x, y) == drawColor) continue;
-            setPixelTraceable(x, y, drawColor);
+            if (getPixel(x, y) == colorDraw) continue;
+            setPixelTraceable(x, y, colorDraw);
 
             // find left side, filling along the way
             int left = x-1;
             while ((left >= 0) && (getPixel(left, y) == filledColor)) {
-                setPixelTraceable(left--, y, drawColor);
+                setPixelTraceable(left--, y, colorDraw);
             }
             left++;
 
             // find right side, filling along the way
             int right = x+1;
             while ((right < canvasWidth) && (getPixel(right, y) == filledColor)) {
-                setPixelTraceable(right++, y, drawColor);
+                setPixelTraceable(right++, y, colorDraw);
             }
             right--;
 
@@ -594,7 +564,7 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
         if (getPixel(x, y) != filledColor) return;
 
         // replace color
-        setPixelTraceable(x, y, drawColor);
+        setPixelTraceable(x, y, colorDraw);
 
         // call recursively
         fillRecursive(x+1, y);
@@ -627,7 +597,7 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
                 double i = x2;
                 for (int j=y2; j<=y1; j++) {
                     if (trace)
-                        setPixelTraceable((int)i, j, drawColor);
+                        setPixelTraceable((int)i, j, colorDraw);
                     else
                         xorPixel((int)i, j);
                     i += delta;
@@ -637,7 +607,7 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
                 double i = x1;
                 for (int j=y1; j<=y2; j++) {
                     if (trace)
-                        setPixelTraceable((int)i, j, drawColor);
+                        setPixelTraceable((int)i, j, colorDraw);
                     else
                         xorPixel((int)i, j);
                     i += delta;
@@ -650,7 +620,7 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
                 double j = y2;
                 for (int i=x2; i<=x1; i++) {
                     if (trace)
-                        setPixelTraceable(i, (int)j, drawColor);
+                        setPixelTraceable(i, (int)j, colorDraw);
                     else
                         xorPixel(i, (int)j);
                     j += delta;
@@ -660,7 +630,7 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
                 double j = y1;
                 for (int i=x1; i<=x2; i++) {
                     if (trace)
-                        setPixelTraceable(i, (int)j, drawColor);
+                        setPixelTraceable(i, (int)j, colorDraw);
                     else
                         xorPixel(i, (int)j);
                     j += delta;
