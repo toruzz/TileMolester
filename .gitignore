@@ -3,3 +3,4 @@ dist
 .vscode
 src/languages
 TileMolester.jar
+.DS_Store
