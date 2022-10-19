@@ -16,7 +16,7 @@
 *
 */
 
-import javax.swing.UIManager;
+import javax.swing.UIManager.*;
 
 import tm.ui.TMUI;
 import java.awt.Color;
