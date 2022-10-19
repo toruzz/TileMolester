@@ -17,6 +17,7 @@
 */
 
 import javax.swing.UIManager;
+import javax.swing.UIManager.*;
 
 import tm.ui.TMUI;
 import java.awt.Color;
@@ -45,22 +46,20 @@ public class TileMolester {
 
 	Logger mLog = Logger.getGlobal();
 
-	boolean isLinux = TMUI.isLinux;
-	boolean isMacOs = TMUI.isMacOs;
-	boolean isWindows = TMUI.isWindows;
-
-    public TileMolester() {
+	public TileMolester() {
 		try {
-			if(isLinux) UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-//			if(isMacOs) UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-			if(isMacOs) UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-			if(isWindows) UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+        			if ("Nimbus".equals(info.getName())) {
+            				UIManager.setLookAndFeel(info.getClassName());
+            				break;
+        			}
+    			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		new TMUI();
-    }
+	}
 
 	/**
 	*
@@ -68,8 +67,8 @@ public class TileMolester {
 	*
 	**/
 
-    public static void main(String[] args) {
-        new TileMolester();
-    }
+	public static void main(String[] args) {
+		new TileMolester();
+	}
 
 }
