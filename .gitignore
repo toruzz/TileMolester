@@ -4,3 +4,4 @@ dist
 src/languages
 TileMolester.jar
 .DS_Store
+/target/

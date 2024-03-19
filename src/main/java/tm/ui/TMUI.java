@@ -18,7 +18,6 @@
 
 package tm.ui;
 
-import com.oracle.tools.packager.Log;
 import tm.*;
 import tm.colorcodecs.*;
 import tm.tilecodecs.*;
