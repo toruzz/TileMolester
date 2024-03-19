@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE settings SYSTEM "settings.dtd">
 <settings>
+  <property key="locale" value="fr_FR"/>
   <property key="viewStatusBar" value="true"/>
   <property key="viewToolBar" value="true"/>
   <property key="maxRecentFiles" value="10"/>
+  <property key="lastPath" value=""/>
   <property key="MenuBG" value="#f0f0f0"/>
   <property key="WindowBG" value="#d2d2d2"/>
   <property key="AsideBG" value="#f0f0f0"/>

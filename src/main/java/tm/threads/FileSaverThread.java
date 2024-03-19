@@ -72,7 +72,7 @@ public class FileSaverThread extends ProgressThread {
                 catch (Exception e) { }
                 bytesLeft = 0;
             }
-            yield();
+            ProgressThread.yield();
         }
         try {
             raf.close();
