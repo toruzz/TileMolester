@@ -1,7 +1,9 @@
 build
 dist
-.vscode
-src/languages
 TileMolester.jar
 .DS_Store
-/target/
+.vscode
+/src/languages
+/resources/*.xml
+/target
+/private

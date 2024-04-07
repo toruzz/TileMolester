@@ -7,6 +7,14 @@ It was originally developed SnowBro and later improved by Central MiB and Lab313
 You can change the UI colors and icons theme in settings.xml.
 ## Changelog
 
+### v0.21 (by toruzz)
+- New application icon
+- New themes for Windows and MacOS
+- UX improvements
+- Fractional scale support
+- Several fixes
+- Used Maven for building (PR by devnewton)
+
 ### v0.20 (by toruzz)
 - Native theme loading in Windows and Linux
 - New icon theme

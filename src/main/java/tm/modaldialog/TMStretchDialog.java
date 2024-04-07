@@ -21,6 +21,8 @@ package tm.modaldialog;
 import tm.utils.DecimalNumberVerifier;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 
 /**
@@ -77,6 +79,9 @@ public class TMStretchDialog extends TMModalDialog {
         rowsLabel = new JLabel(xlate("Rows_Prompt"));
         colsField = new JTextField();
         rowsField = new JTextField();
+
+		colsLabel.setBorder(new EmptyBorder(0, 4, 0, 4));
+		rowsLabel.setBorder(new EmptyBorder(0, 4, 0, 4));
 
         JPanel colsPane = new JPanel();
         colsPane.setLayout(new BoxLayout(colsPane, BoxLayout.X_AXIS));

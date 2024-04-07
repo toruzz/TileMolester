@@ -22,6 +22,7 @@ import tm.treenodes.*;
 import tm.modaldialog.TMNewFolderDialog;
 import tm.utils.Xlator;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.tree.*;
 import javax.swing.event.*;
 import java.awt.*;
@@ -96,6 +97,7 @@ public class TMOrganizeTreeDialog extends JDialog implements TreeModelListener {
         topPane.add(moveButton);
         topPane.add(newFolderButton);
         topPane.add(deleteButton);
+		topPane.setBorder(new EmptyBorder(0,0,10,0));
 
         // create panel with Close button
         JPanel bottomPane = new JPanel();

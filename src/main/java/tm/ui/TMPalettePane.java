@@ -30,6 +30,9 @@ import tm.utils.DecimalNumberVerifier;
 
 import javax.swing.*;
 import javax.swing.event.*;
+
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.border.*;
@@ -55,11 +58,11 @@ public class TMPalettePane extends JPanel implements MouseInputListener {
 	
     ClassLoader cl = getClass().getClassLoader();
     private Cursor pickupCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon(cl.getResource("icons/DropperCursor24.gif")).getImage(), new Point(8,23), "Dropper");
-    private JButton decButton = new JButton(new ImageIcon(cl.getResource("icons/light/DecPalIndex24.png")));
-    private JButton incButton = new JButton(new ImageIcon(cl.getResource("icons/light/IncPalIndex24.png")));
-    private JButton leftShiftButton = new JButton(new ImageIcon(cl.getResource("icons/light/DecPalIndex24.png")));
-    private JButton rightShiftButton = new JButton(new ImageIcon(cl.getResource("icons/light/IncPalIndex24.png")));
-    private JButton swapButton = new JButton(new ImageIcon(cl.getResource("icons/light/Swap24.png")));
+    private JButton decButton = new JButton(new FlatSVGIcon("icons/fluent/caret_left_24_filled.svg", 32, 32));
+    private JButton incButton = new JButton(new FlatSVGIcon("icons/fluent/caret_right_24_filled.svg", 32, 32));
+    private JButton leftShiftButton = new JButton(new FlatSVGIcon("icons/fluent/caret_left_24_filled.svg", 22, 22));
+    private JButton rightShiftButton = new JButton(new FlatSVGIcon("icons/fluent/caret_right_24_filled.svg", 22, 22));
+    private JButton swapButton = new JButton(new FlatSVGIcon("icons/fluent/custom/swap.svg", 22, 22));
 	
 	private JTextField shiftValueField = new JTextField("1");
 

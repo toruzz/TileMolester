@@ -20,6 +20,7 @@ package tm.modaldialog;
 
 import tm.utils.Xlator;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -91,6 +92,7 @@ public abstract class TMModalDialog extends JDialog {
                 return new Insets(10,10,10,10);
             }
         };
+		buttonPane.setBorder(new EmptyBorder(10, 0, 0, 0));
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout());
         contentPane.add(buttonPane, BorderLayout.SOUTH);
