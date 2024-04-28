@@ -23,6 +23,7 @@ import tm.colorcodecs.*;
 import tm.tilecodecs.*;
 import tm.fileselection.*;
 import tm.modaldialog.*;
+import tm.reversibleaction.ReversiblePaletteEditAction;
 import tm.treenodes.*;
 import tm.utils.*;
 import tm.threads.*;
@@ -69,6 +70,8 @@ public class TMUI extends JFrame {
 	public static boolean isLinux = OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0;
 	public static boolean isMacOs = OS.indexOf("mac os x") >= 0;
 	public static boolean isWindows = OS.indexOf("win") >= 0;
+
+	private final String MacMenuBG = "#292929";
 
 	// tool types
 	public TMTools.ToolType toolType = TMTools.ToolType.SELECT_TOOL;
@@ -266,7 +269,7 @@ public class TMUI extends JFrame {
 	// private JMenuItem saveBookmarksMenuItem = new JMenuItem("Save Bookmarks");
 	// Palette menu
 	private JMenu paletteMenu = new JMenu("Palette");
-	private JMenuItem editColorsMenuItem = new JMenuItem("Edit Colors...");
+	private JMenuItem editColorsMenuItem = new JMenuItem("Edit Color");
 	private JMenu colorCodecMenu = new JMenu("Format");
 	private JMenu paletteEndiannessMenu = new JMenu("Endianness");
 	private JRadioButtonMenuItem paletteLittleEndianMenuItem = new JRadioButtonMenuItem("Little");
@@ -1931,6 +1934,7 @@ public class TMUI extends JFrame {
 		menuBar.add(navigateMenu);
 		// Palette menu
 		paletteMenu.setMnemonic(KeyEvent.VK_P);
+		
 		// Edit Colors...
 		editColorsMenuItem.setMnemonic(KeyEvent.VK_E);
 		editColorsMenuItem.addActionListener(
@@ -2740,7 +2744,7 @@ public class TMUI extends JFrame {
 		if (localizedHelpFile.exists()) {
 			BrowserControl.displayURL("file://" + localizedHelpFile.getAbsolutePath());
 		} else {
-			BrowserControl.displayURL("file://docs/help.htm");
+			BrowserControl.displayURL("docs\\help.htm");
 		}
 	}
 
@@ -3352,37 +3356,23 @@ public class TMUI extends JFrame {
 	public void doEditColorsCommand() {
 		TMView view = getSelectedView();
 		if (view != null) {
-			JOptionPane.showMessageDialog(
-					this,
-					"Todo.\nDouble-click on a color in the palette below to edit it.",
-					"Tile Molester",
-					JOptionPane.INFORMATION_MESSAGE);
 			// let user edit the color
-			/*
-			 * Color newColor = JColorChooser.showDialog(this, "Edit Color", new
-			 * Color(view.getFGColor()));
-			 * if (newColor != null) {
-			 * int rgb = newColor.getRGB();
-			 * int colorIndex = vizualiser.getIndexOfColorAt(e.getX(), e.getY());
-			 * 
-			 * /* view.addReversibleAction(
-			 * new ReversiblePaletteEditAction(
-			 * view,
-			 * view.getPalette(),
-			 * colorIndex,
-			 * view.getPalette().getEntryRGB(colorIndex),
-			 * rgb
-			 * )
-			 * ;
-			 */
-			/*
-			 * view.getPalette().setEntryRGB(colorIndex, rgb);
-			 * ui.setFGColor(rgb);
-			 * view.getEditorCanvas().unpackPixels();
-			 * view.getEditorCanvas().redraw();
-			 * repaint();
-			 * }
-			 */
+			Color newColor = JColorChooser.showDialog(this, "Edit Color", new Color(view.getFGColor()));
+			if (newColor != null) {
+				int rgb = newColor.getRGB();
+				TMPaletteVizualiser vizualiser = palettePane.getVizualiser();
+
+				int colorIndex = vizualiser.getLastIndex();
+				
+				view.addReversibleAction(new ReversiblePaletteEditAction(view, view.getPalette(), colorIndex, view.getPalette().getEntryRGB(colorIndex), rgb));
+				view.getPalette().setEntryRGB(colorIndex, rgb);
+
+				this.setFGColor(rgb);
+				view.getEditorCanvas().unpackPixels();
+				view.getEditorCanvas().redraw();
+				repaint();
+			}
+			
 		}
 	}
 
@@ -3708,6 +3698,13 @@ public class TMUI extends JFrame {
 		saveMenuItem.setVisible(false);
 		saveAsMenuItem.setVisible(false);
 		saveAllMenuItem.setVisible(false);
+
+
+		Component[] menuComponents = fileMenu.getMenuComponents();
+		if (menuComponents.length >= 6) {
+            menuComponents[5].setVisible(false);
+        }
+
 		// Hide some Toolbar buttons
 		saveButton.setVisible(false);
 		cutButton.setVisible(false);
@@ -3752,6 +3749,12 @@ public class TMUI extends JFrame {
 		saveAsMenuItem.setVisible(true);
 		saveAllMenuItem.setVisible(true);
 		saveAllMenuItem.setEnabled(false);
+
+		Component[] menuComponents = fileMenu.getMenuComponents();
+		if (menuComponents.length >= 6) {
+            menuComponents[5].setVisible(true);
+        }
+
 		// TODO: Enable previously hidden menu items w/ key accelerators
 		// Show Toolbar buttons
 		saveButton.setVisible(true);

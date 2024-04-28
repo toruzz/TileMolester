@@ -34,6 +34,7 @@ public class TMPaletteVizualiser extends JPanel {
     private int palIndex;
     private int bitDepth;
     private int colorCount;
+	private int lastIndex = 0;
 
 /**
 *
@@ -52,7 +53,18 @@ public class TMPaletteVizualiser extends JPanel {
 **/
 
     public void setPalIndex(int palIndex) {
-        this.palIndex = palIndex;
+        this.lastIndex = palIndex > this.palIndex ? this.lastIndex + this.colorCount : this.lastIndex - this.colorCount;
+		this.palIndex = palIndex;
+    }
+
+/**
+*
+* Gets the last palette index.
+*
+**/
+
+    public int getLastIndex() {
+        return this.lastIndex;
     }
 
 /**
@@ -127,7 +139,8 @@ public class TMPaletteVizualiser extends JPanel {
         x /= w;
         y /= h;
         int i = (y * colorsPerRow) + x;
-        return (colorIndex+i);
+		lastIndex = colorIndex + i;
+        return lastIndex;
     }
 
 /**

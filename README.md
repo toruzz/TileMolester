@@ -9,7 +9,7 @@ You can change the UI colors and icons theme in settings.xml.
 
 ### v0.21 (by toruzz)
 - New application icon
-- New themes for Windows and MacOS
+- New themes for Windows and MacOS. Old custom system removed
 - UX improvements
 - Fractional scale support
 - Several fixes

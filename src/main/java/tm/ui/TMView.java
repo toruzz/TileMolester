@@ -137,13 +137,8 @@ public class TMView extends JInternalFrame {
 		//slider.setForeground(SystemColor.BLUE);
 		//slider.setBackground(SystemColor.RED);
 
-		if (isLinux) {
-			slider.setLocation(4, -14);
-			slider.setSize(32, 424);
-		} else {
-			slider.setLocation(0, 0);
-			slider.setSize(24, 384);
-		}
+		slider.setLocation(0, 0);
+		slider.setSize(24, 384);
 
 		// the scrollpane
 		scrollPane = new JScrollPane(contentPane);

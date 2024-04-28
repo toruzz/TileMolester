@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE settings SYSTEM "settings.dtd">
 <settings>
-  <property key="locale" value="fr_FR"/>
+  <property key="locale" value="es_ES"/>
   <property key="viewStatusBar" value="true"/>
   <property key="viewToolBar" value="true"/>
   <property key="maxRecentFiles" value="10"/>
-  <property key="recentFile" value="C:\Users\Iván\Desktop\Otros\Projects\Active\SML\GBM1\source\data\graphics\new\Mario.2bpp"/>
-  <property key="recentFile" value="C:\Users\Iván\Desktop\SML2DXv181.GBC"/>
-  <property key="recentFile" value="C:\Users\Iván\Desktop\Otros\Projects\Active\Kaeru\frogdx.gbc"/>
-  <property key="recentFile" value="C:\Users\Iván\Desktop\SML2v12 - copia.gb"/>
-  <property key="recentFile" value="C:\Users\Iván\Desktop\SML2v12 (SGB Enhanced).gb"/>
-  <property key="recentFile" value="C:\Users\Iván\Desktop\SML2v12.gb"/>
-  <property key="lastPath" value="C:\Users\Iván\Desktop\Otros\Projects\Active\SML\GBM1\source\data\graphics\new"/>
-  <property key="MenuBG" value="#3c3f41"/>
-  <property key="WindowBG" value="#46494b"/>
-  <property key="AsideBG" value="#3c3f41"/>
-  <property key="FrameBG" value="#3c3f41"/>
+  <property key="lastPath" value=""/>
+  <property key="MenuBG" value="#f0f0f0"/>
+  <property key="WindowBG" value="#ffffff"/>
+  <property key="AsideBG" value="#9a0089"/>
+  <property key="FrameBG" value="#c8c8c8"/>
   <property key="DarkIcons" value="false"/>
 </settings>

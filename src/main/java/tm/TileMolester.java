@@ -24,9 +24,11 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import tm.ui.TMUI;
 import java.awt.Color;
 import java.awt.SystemColor;
+//import java.lang.annotation.Native;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+
 
 /**
  *
@@ -46,20 +48,19 @@ public class TileMolester {
 	 **/
 
 	Logger mLog = Logger.getGlobal();
-
-	boolean isLinux = TMUI.isLinux;
-	boolean isMacOs = TMUI.isMacOs;
-	boolean isWindows = TMUI.isWindows;
-
+	
 	public TileMolester() {
+		System.setProperty( "apple.awt.application.appearance", "system" );
+		System.setProperty( "apple.laf.useScreenMenuBar", "true" );
+
+		boolean isLinux = TMUI.isLinux;
+		boolean isMacOs = TMUI.isMacOs;
+		boolean isWindows = TMUI.isWindows;
 		try {
-			//if (isLinux)
-				//UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
 			if (isMacOs) {
 				FlatMacDarkLaf.setup();
 				UIManager.setLookAndFeel(new FlatMacDarkLaf());
 			} else {
-			//if (isWindows) {
 				FlatDarkLaf.setup();
 				UIManager.setLookAndFeel(new FlatDarkLaf());
 			}

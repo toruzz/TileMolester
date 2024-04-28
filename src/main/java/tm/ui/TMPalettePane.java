@@ -405,6 +405,13 @@ public class TMPalettePane extends JPanel implements MouseInputListener {
         }
     }
 
+	/**
+     * Gets the current vizualiser
+     */
+	public TMPaletteVizualiser getVizualiser() {
+		return vizualiser;
+	}
+
     public void shiftPalette(int shift) {
         view.setKeysEnabled(false);
         //
