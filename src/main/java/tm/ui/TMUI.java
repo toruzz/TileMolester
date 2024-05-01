@@ -30,24 +30,18 @@ import tm.threads.*;
 import tm.filelistener.*;
 import tm.canvases.*;
 import javax.swing.*;
-import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+
 import javax.swing.border.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.plaf.ButtonUI;
 import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.ToolBarUI;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.formdev.flatlaf.util.SystemInfo;
 
 import java.util.*;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
@@ -65,21 +59,13 @@ import org.xml.sax.SAXParseException;
  **/
 
 public class TMUI extends JFrame {
-
-	private static String OS = System.getProperty("os.name").toLowerCase();
-	public static boolean isLinux = OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0;
-	public static boolean isMacOs = OS.indexOf("mac os x") >= 0;
-	public static boolean isWindows = OS.indexOf("win") >= 0;
-
-	private final String MacMenuBG = "#292929";
+	public static boolean isWindows = SystemInfo.isWindows;
 
 	// tool types
 	public TMTools.ToolType toolType = TMTools.ToolType.SELECT_TOOL;
 
 	private int previousTool;
 
-	private int maxRecentFiles = 10;
-	private Vector recentFiles = new Vector();
 	private Vector colorcodecs;
 	private Vector tilecodecs;
 	private Vector filefilters;
@@ -240,6 +226,7 @@ public class TMUI extends JFrame {
 	private JMenu viewMenu = new JMenu("View");
 	private JCheckBoxMenuItem statusBarMenuItem = new JCheckBoxMenuItem("Statusbar");
 	private JCheckBoxMenuItem toolBarMenuItem = new JCheckBoxMenuItem("Toolbar");
+	private JCheckBoxMenuItem darkModeMenuItem = new JCheckBoxMenuItem("Dark mode");
 	private JMenu tileCodecMenu = new JMenu("Codec");
 	private JMenu zoomMenu = new JMenu("Zoom");
 	private JMenuItem zoomInMenuItem = new JMenuItem("In");
@@ -312,18 +299,13 @@ public class TMUI extends JFrame {
 	private Hashtable fileListenerHashtable = new Hashtable();
 
 	private Xlator xl;
-	private File settingsFile = new File("settings.xml");
 
-	private Locale locale = Locale.getDefault();
+	private Locale locale;
 	private boolean viewStatusBar = true;
 	private boolean viewToolBar = true;
+	private boolean darkMode = TMTheme.darkMode;
 
-	private String lastPath = "";
-	public static Color MenuBG = SystemColor.menu;
-	public static Color WindowBG = SystemColor.window;
-	public static Color AsideBG = SystemColor.desktop;
-	public static Color FrameBG = SystemColor.scrollbar;
-	public static boolean DarkIcons = false;
+	private String lastPath;
 
 	private Border emptyBorder = BorderFactory.createEmptyBorder();
 	private JSeparator separator = new JSeparator();
@@ -341,75 +323,9 @@ public class TMUI extends JFrame {
 
 		ImageIcon imgIcon = new ImageIcon(cl.getResource("icons/TMIcon32.png"));
 		setIconImage(imgIcon.getImage());
-
-		FlatSVGIcon.ColorFilter.getInstance()
-				.add(Color.decode("#212121"), Color.decode("#292929"), Color.decode("#e1e1e1"));
-
-		if (settingsFile.exists()) {
-			// load settings from file
-			loadSettings();
-		} else {
-			// assume this is the first time program is run
-			selectLanguage();
-			// File bookmarksDir = new File("bookmarks");
-			// bookmarksDir.mkdir();
-			// copy bookmarks.dtd to bookmarksDir
-			// File palettesDir = new File("palettes");
-			// palettesDir.mkdir();
-			// copy palettes.dtd to palettesDir
-			/*
-			 * File resourcesDir = new File("resources");
-			 * if (!resourcesDir.exists()) {
-			 * resourcesDir.mkdir();
-			 * File resourceDTDFile = new File(resourcesDir, "tmres.dtd");
-			 * try {
-			 * FileWriter fw = new FileWriter(resourceDTDFile);
-			 * fw.write(""+
-			 * "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"+
-			 * "<!ELEMENT tmres (bookmarks?, palettes?)>\n"+
-			 * "<!ELEMENT bookmarks (folder | bookmark)*>\n"+
-			 * "<!ELEMENT palettes (folder | palette)*>\n"+
-			 * "<!ELEMENT folder (name, (folder | bookmark | palette)*)>\n"+
-			 * "<!ELEMENT bookmark (description)>\n"+
-			 * "<!ATTLIST bookmark\n"+
-			 * "            offset          CDATA       #REQUIRED\n"+
-			 * "            width           CDATA       #REQUIRED\n"+
-			 * "            height          CDATA       #REQUIRED\n"+
-			 * "            mode            (1D | 2D)   #REQUIRED\n"+
-			 * "            codec           CDATA       #REQUIRED\n"+
-			 * "            palIndex        CDATA       #REQUIRED\n"+
-			 * "            palette         CDATA       #IMPLIED\n"+
-			 * ">\n"+
-			 * "<!ELEMENT palette (description, data?)>\n"+
-			 * "<!ATTLIST palette\n"+
-			 * "            id              ID          #IMPLIED\n"+
-			 * "            direct          (yes | no)  #REQUIRED\n"+
-			 * "            codec           CDATA       #REQUIRED\n"+
-			 * "            size            CDATA       #REQUIRED\n"+
-			 * "            offset          CDATA       #IMPLIED\n"+
-			 * "            endianness      (little | big) \"little\"\n"+
-			 * ">\n"+
-			 * "<!ELEMENT data (#PCDATA)>\n"+
-			 * "<!ELEMENT name (#PCDATA)>\n"+
-			 * "<!ELEMENT description (#PCDATA)>\n"+
-			 * "");
-			 * fw.close();
-			 * }
-			 * catch (Exception e) { }
-			 * }
-			 */
-		}
-		setLocale(locale);
-		Locale.setDefault(locale);
-		JComponent.setDefaultLocale(this.locale);
-		// separator.setForeground(Color.decode("#292929"));
-
-		// desktop.repaint();
-
-		// show splash screen
-		// new TMSplashScreen(this); // No need for a splash screen, it runs immediately
-		// on modern systems
-
+		
+		locale = TileMolester.settings.getLocale();
+		lastPath = TileMolester.settings.getLastPath();
 		// create a translator
 		try {
 			xl = new Xlator("languages/language", locale);
@@ -421,7 +337,11 @@ public class TMUI extends JFrame {
 			System.exit(0);
 		}
 
-		///////// Translate items
+		
+		setLocale(locale);
+		Locale.setDefault(locale);
+		JComponent.setDefaultLocale(this.locale);
+		// separator.setForeground(Color.decode("#292929"));
 
 		// File menu
 		fileMenu.setText(xlate("File"));
@@ -463,6 +383,7 @@ public class TMUI extends JFrame {
 		viewMenu.setText(xlate("View"));
 		statusBarMenuItem.setText(xlate("Statusbar"));
 		toolBarMenuItem.setText(xlate("Toolbar"));
+		darkModeMenuItem.setText(xlate("Dark_Mode"));
 		tileCodecMenu.setText(xlate("Codec"));
 		zoomMenu.setText(xlate("Zoom"));
 		zoomInMenuItem.setText(xlate("In"));
@@ -491,7 +412,7 @@ public class TMUI extends JFrame {
 		organizeBookmarksMenuItem.setText(xlate("Organize_Bookmarks"));
 		// Palette menu
 		paletteMenu.setText(xlate("Palette"));
-		editColorsMenuItem.setText(xlate("Edit_Colors"));
+		editColorsMenuItem.setText(xlate("Edit_Color"));
 		colorCodecMenu.setText(xlate("Format"));
 		paletteEndiannessMenu.setText(xlate("Endianness"));
 		paletteLittleEndianMenuItem.setText(xlate("Little_Endian"));
@@ -595,7 +516,6 @@ public class TMUI extends JFrame {
 		initToolBar();
 		initNavBar();
 		toolBarPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		toolBarPane.setBackground(MenuBG);
 		toolBarPane.add(toolBar);
 		toolBarPane.add(toolBarMDI);
 		toolBarPane.add(navBar);
@@ -620,8 +540,6 @@ public class TMUI extends JFrame {
 
 		barPane.add(selectionToolBar);
 		barPane.add(toolPalette);
-		//barPane.setBackground(AsideBG);
-		//toolPane.setBackground(AsideBG);
 		toolPane.setLayout(new BorderLayout());
 		toolPane.add(barPane, BorderLayout.NORTH);
 		pane.add(toolPane, BorderLayout.WEST);
@@ -687,139 +605,15 @@ public class TMUI extends JFrame {
 				finalWidth,
 				finalHeight);
 
-		// Make dragging faster:
-		desktop.putClientProperty("JDesktopPane.dragMode", "outline");
 
 		// MDI menus and such shouldn't be shown until file loaded.
 		disableMDIStuff();
 
 		toolBarPane.setVisible(viewToolBar);
 
+		com.formdev.flatlaf.FlatLaf.updateUI();
 		// Show and maximize.
 		setVisible(true);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
-	}
-
-	/**
-	 *
-	 * Saves program settings to file.
-	 *
-	 **/
-
-	public void saveSettings() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-		sb.append("<!DOCTYPE settings SYSTEM \"settings.dtd\">\n");
-		sb.append("<settings>\n");
-
-		sb.append(makePropertyTag("locale", locale.toString()));
-		sb.append(makePropertyTag("viewStatusBar", "" + viewStatusBar));
-		sb.append(makePropertyTag("viewToolBar", "" + viewToolBar));
-		sb.append(makePropertyTag("maxRecentFiles", "" + maxRecentFiles));
-
-		File recentFile = null;
-		// To remember last path
-		for (int i = 0; i < recentFiles.size(); i++) {
-			recentFile = (File) recentFiles.get(i);
-			sb.append(makePropertyTag("recentFile", recentFile.getAbsolutePath()));
-		}
-		sb.append(makePropertyTag("lastPath", lastPath));
-		sb.append(makePropertyTag("MenuBG", "#" + Integer.toHexString(MenuBG.getRGB()).substring(2)));
-		sb.append(makePropertyTag("WindowBG", "#" + Integer.toHexString(WindowBG.getRGB()).substring(2)));
-		sb.append(makePropertyTag("AsideBG", "#" + Integer.toHexString(AsideBG.getRGB()).substring(2)));
-		sb.append(makePropertyTag("FrameBG", "#" + Integer.toHexString(FrameBG.getRGB()).substring(2)));
-		sb.append(makePropertyTag("DarkIcons", DarkIcons ? "true" : "false"));
-
-		sb.append("</settings>\n");
-
-		// write to file
-		try {
-			FileWriter fw = new FileWriter(settingsFile);
-			fw.write(sb.toString());
-			fw.close();
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this,
-					xlate("Save_Settings_Error") + "\n" + e.getMessage(),
-					"Tile Molester",
-					JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	/**
-	 *
-	 * Makes a property tag with the given key and value.
-	 *
-	 **/
-
-	public String makePropertyTag(String key, String value) {
-		return "  <property key=\"" + key + "\" value=\"" + value + "\"/>\n";
-	}
-
-	/**
-	 *
-	 * Loads program settings from file.
-	 *
-	 **/
-
-	public void loadSettings() {
-		boolean loadedLocale = false;
-		Document doc = null;
-		try {
-			doc = XMLParser.parse(settingsFile);
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this,
-					xlate("Load_Settings_Error") + "\n" + e.getMessage(),
-					"Tile Molester",
-					JOptionPane.ERROR_MESSAGE);
-		}
-		if (doc == null)
-			return;
-
-		Element settings = doc.getDocumentElement();
-		NodeList properties = settings.getElementsByTagName("property");
-		// process all the properties
-		for (int i = 0; i < properties.getLength(); i++) {
-			// get property (key, value) pair
-			Element property = (Element) properties.item(i);
-			String key = property.getAttribute("key");
-			String value = property.getAttribute("value");
-			// handle property
-			if (key.equals("locale")) {
-				StringTokenizer st = new StringTokenizer(value, "_");
-				if (st.countTokens() != 2)
-					continue;
-				String language = st.nextToken();
-				String country = st.nextToken();
-				locale = new Locale(language, country);
-				loadedLocale = true;
-			}
-			if (key.equals("viewStatusBar")) {
-				viewStatusBar = value.equals("true");
-			} else if (key.equals("viewToolBar")) {
-				viewToolBar = value.equals("true");
-			} else if (key.equals("maxRecentFiles")) {
-				maxRecentFiles = Integer.parseInt(value);
-			} else if (key.equals("recentFile")) {
-				File file = new File(value);
-				if (file.exists()) {
-					recentFiles.add(file);
-				}
-			} else if (key.equals("lastPath")) {
-				lastPath = value;
-			} else if (key.equals("MenuBG")) {
-				MenuBG = Color.decode(value);
-			} else if (key.equals("WindowBG")) {
-				WindowBG = Color.decode(value);
-			} else if (key.equals("AsideBG")) {
-				AsideBG = Color.decode(value);
-			} else if (key.equals("FrameBG")) {
-				FrameBG = Color.decode(value);
-			} else if (key.equals("DarkIcons")) {
-				DarkIcons = value.equals("true");
-			}
-		}
-		if (!loadedLocale)
-			selectLanguage();
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -837,46 +631,8 @@ public class TMUI extends JFrame {
 			return new CButtonUI();
 		}
 
-		@Override
-		public void paint(Graphics g, JComponent c) {
-			final Color color1 = new Color(230, 255, 255, 0);
-			final Color color2 = new Color(255, 230, 255, 64);
-			final Color alphaColor = new Color(200, 200, 230, 64);
-			final Color color3 = new Color(alphaColor.getRed(), alphaColor.getGreen(), alphaColor.getBlue(), 0);
-			final Color color4 = new Color(alphaColor.getRed(), alphaColor.getGreen(), alphaColor.getBlue(), 64);
-			super.paint(g, c);
-			Graphics2D g2D = (Graphics2D) g;
-			GradientPaint gradient1 = new GradientPaint(0.0F, (float) c.getHeight() / (float) 2, color1, 0.0F, 0.0F,
-					color2);
-			Rectangle rec1 = new Rectangle(0, 0, c.getWidth(), c.getHeight() / 2);
-			g2D.setPaint(gradient1);
-			g2D.fill(rec1);
-			GradientPaint gradient2 = new GradientPaint(0.0F, (float) c.getHeight() / (float) 2, color3, 0.0F,
-					c.getHeight(), color4);
-			Rectangle rec2 = new Rectangle(0, c.getHeight() / 2, c.getWidth(), c.getHeight());
-			g2D.setPaint(gradient2);
-			g2D.fill(rec2);
-		}
-
-		/*
-		 * @Override
-		 * public void paintButtonPressed(Graphics g, AbstractButton b) {
-		 * paintText(g, b, b.getBounds(), b.getText());
-		 * g.setColor(Color.red.brighter());
-		 * g.fillRect(0, 0, b.getSize().width, b.getSize().height);
-		 * }
-		 */
-
 		public void paintBorder(Graphics g) {
 		}
-
-		/*
-		 * @Override
-		 * protected void paintFocus(Graphics g, AbstractButton b, Rectangle viewRect,
-		 * Rectangle textRect,
-		 * Rectangle iconRect) {
-		 * }
-		 */
 	}
 
 	/**
@@ -889,7 +645,6 @@ public class TMUI extends JFrame {
 		// toolBar.setBorder(null);
 
 		// New
-		newButton.setBackground(MenuBG);
 		newButton.setToolTipText(newMenuItem.getText());
 		newButton.setFocusable(false);
 		newButton.addActionListener(
@@ -900,7 +655,6 @@ public class TMUI extends JFrame {
 				});
 		toolBar.add(newButton);
 		// Open
-		openButton.setBackground(MenuBG);
 		openButton.setToolTipText(openMenuItem.getText());
 		openButton.setFocusable(false);
 		openButton.addActionListener(
@@ -911,7 +665,6 @@ public class TMUI extends JFrame {
 				});
 		toolBar.add(openButton);
 		// Save
-		saveButton.setBackground(MenuBG);
 		saveButton.setToolTipText(saveMenuItem.getText());
 		saveButton.setFocusable(false);
 		saveButton.addActionListener(
@@ -924,7 +677,6 @@ public class TMUI extends JFrame {
 		//
 		toolBarMDI.addSeparator();
 		// Cut
-		cutButton.setBackground(MenuBG);
 		cutButton.setToolTipText(cutMenuItem.getText());
 		cutButton.setFocusable(false);
 		cutButton.addActionListener(
@@ -935,7 +687,6 @@ public class TMUI extends JFrame {
 				});
 		toolBarMDI.add(cutButton);
 		// Copy
-		copyButton.setBackground(MenuBG);
 		copyButton.setToolTipText(copyMenuItem.getText());
 		copyButton.setFocusable(false);
 		copyButton.addActionListener(
@@ -946,7 +697,6 @@ public class TMUI extends JFrame {
 				});
 		toolBarMDI.add(copyButton);
 		// Paste
-		pasteButton.setBackground(MenuBG);
 		pasteButton.setToolTipText(pasteMenuItem.getText());
 		pasteButton.setFocusable(false);
 		pasteButton.addActionListener(
@@ -959,7 +709,6 @@ public class TMUI extends JFrame {
 		//
 		toolBarMDI.addSeparator();
 		// Undo
-		undoButton.setBackground(MenuBG);
 		undoButton.setToolTipText(undoMenuItem.getText());
 		undoButton.setFocusable(false);
 		undoButton.addActionListener(
@@ -970,7 +719,6 @@ public class TMUI extends JFrame {
 				});
 		toolBarMDI.add(undoButton);
 		// Redo
-		redoButton.setBackground(MenuBG);
 		redoButton.setToolTipText(redoMenuItem.getText());
 		redoButton.setFocusable(false);
 		redoButton.addActionListener(
@@ -983,7 +731,6 @@ public class TMUI extends JFrame {
 		//
 		toolBarMDI.addSeparator();
 		// Go To
-		gotoButton.setBackground(MenuBG);
 		gotoButton.setToolTipText(goToMenuItem.getText());
 		gotoButton.setFocusable(false);
 		gotoButton.addActionListener(
@@ -994,7 +741,6 @@ public class TMUI extends JFrame {
 				});
 		toolBarMDI.add(gotoButton);
 		// Add To Bookmarks...
-		addBookmarkButton.setBackground(MenuBG);
 		addBookmarkButton.setToolTipText(addToBookmarksMenuItem.getText());
 		addBookmarkButton.setFocusable(false);
 		addBookmarkButton.addActionListener(
@@ -1007,7 +753,6 @@ public class TMUI extends JFrame {
 		//
 		toolBarMDI.addSeparator();
 		// Decrease Width
-		decWidthButton.setBackground(MenuBG);
 		decWidthButton.setToolTipText(xlate("Decrease_Width"));
 		decWidthButton.setFocusable(false);
 		decWidthButton.addActionListener(
@@ -1018,7 +763,6 @@ public class TMUI extends JFrame {
 				});
 		toolBarMDI.add(decWidthButton);
 		// Increase Width
-		incWidthButton.setBackground(MenuBG);
 		incWidthButton.setToolTipText(xlate("Increase_Width"));
 		incWidthButton.setFocusable(false);
 		incWidthButton.addActionListener(
@@ -1029,7 +773,6 @@ public class TMUI extends JFrame {
 				});
 		toolBarMDI.add(incWidthButton);
 		// Decrease Height
-		decHeightButton.setBackground(MenuBG);
 		decHeightButton.setToolTipText(xlate("Decrease_Height"));
 		decHeightButton.setFocusable(false);
 		decHeightButton.addActionListener(
@@ -1040,7 +783,6 @@ public class TMUI extends JFrame {
 				});
 		toolBarMDI.add(decHeightButton);
 		// Increase Height
-		incHeightButton.setBackground(MenuBG);
 		incHeightButton.setToolTipText(xlate("Increase_Height"));
 		incHeightButton.setFocusable(false);
 		incHeightButton.addActionListener(
@@ -1069,7 +811,6 @@ public class TMUI extends JFrame {
 		navBar.addSeparator();
 
 		// Page Back
-		minusPageButton.setBackground(MenuBG);
 		minusPageButton.setToolTipText(xlate("Page_Back"));
 		minusPageButton.setFocusable(false);
 		minusPageButton.addActionListener(
@@ -1080,7 +821,6 @@ public class TMUI extends JFrame {
 				});
 		navBar.add(minusPageButton);
 		// Page Forward
-		plusPageButton.setBackground(MenuBG);
 		plusPageButton.setToolTipText(xlate("Page_Forward"));
 		plusPageButton.setFocusable(false);
 		plusPageButton.addActionListener(
@@ -1091,7 +831,6 @@ public class TMUI extends JFrame {
 				});
 		navBar.add(plusPageButton);
 		// Row Back
-		minusRowButton.setBackground(MenuBG);
 		minusRowButton.setToolTipText(xlate("Row_Back"));
 		minusRowButton.setFocusable(false);
 		minusRowButton.addActionListener(
@@ -1102,7 +841,6 @@ public class TMUI extends JFrame {
 				});
 		navBar.add(minusRowButton);
 		// Row Forward
-		plusRowButton.setBackground(MenuBG);
 		plusRowButton.setToolTipText(xlate("Row_Forward"));
 		plusRowButton.setFocusable(false);
 		plusRowButton.addActionListener(
@@ -1113,7 +851,6 @@ public class TMUI extends JFrame {
 				});
 		navBar.add(plusRowButton);
 		// Tile Back
-		minusTileButton.setBackground(MenuBG);
 		minusTileButton.setToolTipText(xlate("Tile_Back"));
 		minusTileButton.setFocusable(false);
 		minusTileButton.addActionListener(
@@ -1124,7 +861,6 @@ public class TMUI extends JFrame {
 				});
 		navBar.add(minusTileButton);
 		// Tile Forward
-		plusTileButton.setBackground(MenuBG);
 		plusTileButton.setToolTipText(xlate("Tile_Forward"));
 		plusTileButton.setFocusable(false);
 		plusTileButton.addActionListener(
@@ -1135,7 +871,6 @@ public class TMUI extends JFrame {
 				});
 		navBar.add(plusTileButton);
 		// Byte Back
-		minusByteButton.setBackground(MenuBG);
 		minusByteButton.setToolTipText(xlate("Byte_Back"));
 		minusByteButton.setFocusable(false);
 		minusByteButton.addActionListener(
@@ -1146,7 +881,6 @@ public class TMUI extends JFrame {
 				});
 		navBar.add(minusByteButton);
 		// Byte Forward
-		plusByteButton.setBackground(MenuBG);
 		plusByteButton.setToolTipText(xlate("Byte_Forward"));
 		plusByteButton.setFocusable(false);
 		plusByteButton.addActionListener(
@@ -1169,9 +903,7 @@ public class TMUI extends JFrame {
 
 	private void initToolPalette() {
 		toolPalette.setBorder(null);
-		//toolPalette.setBackground(AsideBG);
 		// Selection
-		selectButton.setBackground(AsideBG);
 		selectButton.setToolTipText(xlate("Selection"));
 		selectButton.setFocusable(false);
 		selectButton.addActionListener(
@@ -1184,7 +916,6 @@ public class TMUI extends JFrame {
 				});
 		toolPalette.add(selectButton);
 		// Zoom
-		zoomButton.setBackground(AsideBG);
 		zoomButton.setToolTipText(xlate("Zoom"));
 		zoomButton.setFocusable(false);
 		zoomButton.addActionListener(
@@ -1197,7 +928,6 @@ public class TMUI extends JFrame {
 				});
 		toolPalette.add(zoomButton);
 		// Dropper
-		pickupButton.setBackground(AsideBG);
 		pickupButton.setToolTipText(xlate("Dropper"));
 		pickupButton.setFocusable(false);
 		pickupButton.addActionListener(
@@ -1210,7 +940,6 @@ public class TMUI extends JFrame {
 				});
 		toolPalette.add(pickupButton);
 		// Brush
-		brushButton.setBackground(AsideBG);
 		brushButton.setToolTipText(xlate("Brush"));
 		brushButton.setFocusable(false);
 		brushButton.addActionListener(
@@ -1223,7 +952,6 @@ public class TMUI extends JFrame {
 				});
 		toolPalette.add(brushButton);
 		// Line
-		lineButton.setBackground(AsideBG);
 		lineButton.setToolTipText(xlate("Line"));
 		lineButton.setFocusable(false);
 		lineButton.addActionListener(
@@ -1236,7 +964,6 @@ public class TMUI extends JFrame {
 				});
 		toolPalette.add(lineButton);
 		// Flood Fill
-		fillButton.setBackground(AsideBG);
 		fillButton.setToolTipText(xlate("Flood_Fill"));
 		fillButton.setFocusable(false);
 		fillButton.addActionListener(
@@ -1249,7 +976,6 @@ public class TMUI extends JFrame {
 				});
 		toolPalette.add(fillButton);
 		// Color Replacer
-		replaceButton.setBackground(AsideBG);
 		replaceButton.setToolTipText(xlate("Color_Replacer"));
 		replaceButton.setFocusable(false);
 		replaceButton.addActionListener(
@@ -1262,7 +988,6 @@ public class TMUI extends JFrame {
 				});
 		toolPalette.add(replaceButton);
 		// Mover
-		moveButton.setBackground(AsideBG);
 		moveButton.setToolTipText(xlate("Mover"));
 		moveButton.setFocusable(false);
 		moveButton.addActionListener(
@@ -1306,7 +1031,6 @@ public class TMUI extends JFrame {
 	public void initSelectionToolBar() {
 		selectionToolBar.setBorder(null);
 		// Mirror
-		mirrorButton.setBackground(AsideBG);
 		mirrorButton.setToolTipText(mirrorMenuItem.getText());
 		mirrorButton.setFocusable(false);
 		mirrorButton.addActionListener(
@@ -1317,7 +1041,6 @@ public class TMUI extends JFrame {
 				});
 		selectionToolBar.add(mirrorButton);
 		// Flip
-		flipButton.setBackground(AsideBG);
 		flipButton.setToolTipText(flipMenuItem.getText());
 		flipButton.setFocusable(false);
 		flipButton.addActionListener(
@@ -1328,7 +1051,6 @@ public class TMUI extends JFrame {
 				});
 		selectionToolBar.add(flipButton);
 		// Rotate Right
-		rotateRightButton.setBackground(AsideBG);
 		rotateRightButton.setToolTipText(rotateRightMenuItem.getText());
 		rotateRightButton.setFocusable(false);
 		rotateRightButton.addActionListener(
@@ -1339,7 +1061,6 @@ public class TMUI extends JFrame {
 				});
 		selectionToolBar.add(rotateRightButton);
 		// Rotate Left
-		rotateLeftButton.setBackground(AsideBG);
 		rotateLeftButton.setToolTipText(rotateLeftMenuItem.getText());
 		rotateLeftButton.setFocusable(false);
 		rotateLeftButton.addActionListener(
@@ -1350,7 +1071,6 @@ public class TMUI extends JFrame {
 				});
 		selectionToolBar.add(rotateLeftButton);
 		// Shift Left
-		shiftLeftButton.setBackground(AsideBG);
 		shiftLeftButton.setToolTipText(shiftLeftMenuItem.getText());
 		shiftLeftButton.setFocusable(false);
 		shiftLeftButton.addActionListener(
@@ -1361,7 +1081,6 @@ public class TMUI extends JFrame {
 				});
 		selectionToolBar.add(shiftLeftButton);
 		// Shift Right
-		shiftRightButton.setBackground(AsideBG);
 		shiftRightButton.setToolTipText(shiftRightMenuItem.getText());
 		shiftRightButton.setFocusable(false);
 		shiftRightButton.addActionListener(
@@ -1372,7 +1091,6 @@ public class TMUI extends JFrame {
 				});
 		selectionToolBar.add(shiftRightButton);
 		// Shift Up
-		shiftUpButton.setBackground(AsideBG);
 		shiftUpButton.setToolTipText(shiftUpMenuItem.getText());
 		shiftUpButton.setFocusable(false);
 		shiftUpButton.addActionListener(
@@ -1383,7 +1101,6 @@ public class TMUI extends JFrame {
 				});
 		selectionToolBar.add(shiftUpButton);
 		// Shift Down
-		shiftDownButton.setBackground(AsideBG);
 		shiftDownButton.setToolTipText(shiftDownMenuItem.getText());
 		shiftDownButton.setFocusable(false);
 		shiftDownButton.addActionListener(
@@ -1587,6 +1304,7 @@ public class TMUI extends JFrame {
 					}
 				});
 		editMenu.add(pasteFromMenuItem);
+
 		menuBar.add(editMenu);
 		// View menu
 		viewMenu.setMnemonic(KeyEvent.VK_V);
@@ -1778,6 +1496,15 @@ public class TMUI extends JFrame {
 					}
 				});
 		viewMenu.add(toolBarMenuItem);
+		darkModeMenuItem.setMnemonic(KeyEvent.VK_K);
+		darkModeMenuItem.setSelected(darkMode);
+		darkModeMenuItem.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						doDarkModeCommand();
+					}
+				});
+		viewMenu.add(darkModeMenuItem);
 		menuBar.add(viewMenu);
 		// Image menu
 		imageMenu.setMnemonic(KeyEvent.VK_I);
@@ -2137,7 +1864,6 @@ public class TMUI extends JFrame {
 
 	public void doOpenCommand() {
 		// set to directory of selected file, if there is one
-		System.out.println(lastPath);
 		TMView view = getSelectedView();
 		if (view != null) {
 			this.fileOpenChooser.setCurrentDirectory(view.getFileImage().getFile().getParentFile());
@@ -2154,6 +1880,7 @@ public class TMUI extends JFrame {
 			File file = fileOpenChooser.getSelectedFile();
 			// updates the last path opened
 			lastPath = file.getPath().substring(0, file.getPath().lastIndexOf(File.separator));
+			TileMolester.settings.setLastPath(lastPath);
 			openFile(file);
 		}
 	}
@@ -2237,8 +1964,10 @@ public class TMUI extends JFrame {
 				res.mkdir();
 			}
 			FileWriter fw = new FileWriter(resourceFile);
-			fw.write(img.getResources().toXML());
-			fw.close();
+			if(img.getResources() != null) {
+				fw.write(img.getResources().toXML());
+				fw.close();
+			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this,
 					xlate("Save_Resources_Error") + "\n" + e.getMessage(),
@@ -2426,7 +2155,7 @@ public class TMUI extends JFrame {
 		doCloseAllCommand();
 		// if all frames were closed, the operation was successful and we can exit.
 		if (desktop.getAllFrames().length == 0) {
-			saveSettings();
+			TileMolester.settings.saveSettings();
 			System.exit(0);
 		}
 	}
@@ -2750,20 +2479,6 @@ public class TMUI extends JFrame {
 
 	/**
 	 *
-	 * Handles menu command "Tip".
-	 * Just a bogus dialog.
-	 *
-	 **/
-
-	public void doTipCommand() {
-		// Show Tip dialog
-		JOptionPane.showConfirmDialog(this,
-				xlate("Drugs_Message"), "Tile Molester",
-				JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-	}
-
-	/**
-	 *
 	 * Handles menu command "About".
 	 * Displays a small dialog with info about the program.
 	 *
@@ -2771,7 +2486,7 @@ public class TMUI extends JFrame {
 
 	public void doAboutCommand() {
 		JOptionPane.showMessageDialog(this,
-				"Tile Molester v0.20\nby SnowBro 2003-2005 (v0.16)\nby Dr. MefistO 2013 (v0.17.2)\nby Mewster 2014-2015 (v0.19)\nby toruzz 2020-2024 (v0.21)",
+				"Tile Molester v0.21\n\nby SnowBro 2003-2005 (v0.16)\nby Dr. MefistO 2013 (v0.17.2)\nby Mewster 2014-2015 (v0.19)\nby toruzz 2020-2024 (v0.21)",
 				"Tile Molester",
 				1);
 	}
@@ -2889,6 +2604,7 @@ public class TMUI extends JFrame {
 
 	public void doStatusBarCommand() {
 		viewStatusBar = !viewStatusBar;
+		TileMolester.settings.setViewStatusBar(viewStatusBar);
 		statusBar.setVisible(viewStatusBar);
 		statusBarMenuItem.setSelected(viewStatusBar);
 	}
@@ -2902,8 +2618,22 @@ public class TMUI extends JFrame {
 
 	public void doToolBarCommand() {
 		viewToolBar = !viewToolBar;
+		TileMolester.settings.setViewToolBar(viewToolBar);
 		toolBarPane.setVisible(viewToolBar);
 		toolBarMenuItem.setSelected(viewToolBar);
+	}
+
+	/**
+	 *
+	 * Handles menu command "Dark mode".
+	 * Toggles the dark mode theme.
+	 *
+	 **/
+
+	public void doDarkModeCommand() {
+		darkMode = !TMTheme.darkMode;
+		darkModeMenuItem.setSelected(darkMode);
+		TMTheme.setDarkMode(darkMode);
 	}
 
 	/**
@@ -3140,6 +2870,7 @@ public class TMUI extends JFrame {
 
 	public void doReopenCommand(File recentFile) {
 		if (recentFile.exists() && recentFile.canRead()) {
+			Vector recentFiles = TileMolester.settings.getRecentFiles();
 			fileOpenChooser.setFileFilter(getTileCodecFilterForFile(recentFile));
 			openFile(recentFile);
 			recentFiles.remove(recentFile);
@@ -3888,7 +3619,6 @@ public class TMUI extends JFrame {
 
 		public ToolButton(ImageIcon icon) {
 			super(icon);
-			setBackground(MenuBG);
 			if (isWindows) {
 				insets = new Insets(8, 8, 8, 8);
 			} else {
@@ -3922,7 +3652,6 @@ public class TMUI extends JFrame {
 
 		public ToolToggleButton(ImageIcon icon) {
 			super(icon);
-			setBackground(MenuBG);
 			if (isWindows) {
 				insets = new Insets(8, 8, 8, 8);
 			} else {
@@ -4578,13 +4307,23 @@ public class TMUI extends JFrame {
 
 	/**
 	 *
+	 * Hide the statusbar coordenates.
+	 *
+	 **/
+
+	public void hideStatusBarCoords() {
+		statusBar.setCoords("");
+	}
+
+	/**
+	 *
 	 * Builds the bookmarks menu according to current file image.
 	 *
 	 **/
 
 	public void refreshBookmarksMenu() {
 		TMView view = getSelectedView();
-		if (view != null) {
+		if (view != null && view.getFileImage().getResources() != null) {
 			buildBookmarksMenu(view.getFileImage().getResources().getBookmarksRoot());
 		}
 	}
@@ -4597,7 +4336,7 @@ public class TMUI extends JFrame {
 
 	public void refreshPalettesMenu() {
 		TMView view = getSelectedView();
-		if (view != null) {
+		if (view != null && view.getFileImage().getResources() != null) {
 			buildPalettesMenu(view.getFileImage().getResources().getPalettesRoot());
 			refreshPaletteSelection(view);
 			refreshPaletteEndiannessSelection(view);
@@ -4687,7 +4426,7 @@ public class TMUI extends JFrame {
 		FileImage img = new FileImage(file, contents);
 		// create resources for it
 		File resourceFile = TMFileResources.getResourceFileFor(file);
-		if (resourceFile.exists()) {
+		if (resourceFile.exists() && resourceFile.length() > 0) {
 			// load the resources from XML document
 			try {
 				new TMFileResources(resourceFile, img, this);
@@ -4723,6 +4462,7 @@ public class TMUI extends JFrame {
 
 		addViewToDesktop(createView(img, tc, pal, mode));
 
+		Vector recentFiles = TileMolester.settings.getRecentFiles();
 		// Remove file from recentFiles, if it's there
 		for (int i = 0; i < recentFiles.size(); i++) {
 			File f = (File) recentFiles.get(i);
@@ -4746,6 +4486,7 @@ public class TMUI extends JFrame {
 
 	public void buildReopenMenu() {
 		reopenMenu.removeAll();
+		Vector recentFiles = TileMolester.settings.getRecentFiles();
 		if (recentFiles.size() == 0) {
 			JMenuItem emptyItem = new JMenuItem("(" + xlate("Empty") + ")");
 			emptyItem.setEnabled(false);
@@ -4801,67 +4542,6 @@ public class TMUI extends JFrame {
 		return ccs;
 	}
 
-	/**
-	 *
-	 * Lets the user select a locale from a combobox.
-	 *
-	 **/
-
-	public void selectLanguage() {
-		// figure out available translations
-		File dir = new File("languages");
-		File[] files = dir.listFiles(new PropertiesFilter());
-		if ((files != null) && (files.length > 0)) {
-			Locale[] locales = new Locale[files.length];
-			String[] displayNames = new String[locales.length];
-			int defaultIndex = 0;
-			for (int i = 0; i < files.length; i++) {
-				String name = files[i].getName();
-				String language = name.substring(name.indexOf('_') + 1, name.lastIndexOf('_'));
-				String country = name.substring(name.lastIndexOf('_') + 1, name.lastIndexOf('.'));
-				locales[i] = new Locale(language, country);
-				displayNames[i] = locales[i].getDisplayName();
-				if (language.equals("en"))
-					defaultIndex = i;
-			}
-
-			// ask user to select language
-			String selectedName = (String) JOptionPane.showInputDialog(this,
-					"Choose a locale:", "Tile Molester",
-					JOptionPane.INFORMATION_MESSAGE, null,
-					displayNames, displayNames[defaultIndex]);
-			if (selectedName != null) {
-				// find selected one
-				for (int i = 0; i < locales.length; i++) {
-					if (selectedName.equals(locales[i].getDisplayName())) {
-						// select this locale
-						this.locale = locales[i];
-						break;
-					}
-				}
-			}
-		} else {
-			JOptionPane.showMessageDialog(this,
-					xlate("No language files found.\nPlease check your installation."),
-					"Tile Molester",
-					JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	/**
-	 *
-	 * File filter that recognizes filenames of the form
-	 * language_xx_yy.properties
-	 *
-	 **/
-
-	private class PropertiesFilter implements FilenameFilter {
-		public boolean accept(File dir, String name) {
-			return (name.toLowerCase().startsWith("language")
-					&& (name.indexOf('_') != -1)
-					&& name.toLowerCase().endsWith(".properties"));
-		}
-	}
 
 	/**
 	 *
@@ -4895,6 +4575,7 @@ public class TMUI extends JFrame {
 	 *
 	 **/
 	public void addToRecentFiles(File f) {
+		Vector recentFiles = TileMolester.settings.getRecentFiles();
 		// make sure it's not already in the list
 		for (int i = 0; i < recentFiles.size(); i++) {
 			File rf = (File) recentFiles.get(i);
@@ -4906,9 +4587,10 @@ public class TMUI extends JFrame {
 		// add it
 		recentFiles.insertElementAt(f, 0);
 		// check for "overflow"
+		int maxRecentFiles = TileMolester.settings.getMaxRecentFiles();
 		if (recentFiles.size() > maxRecentFiles) {
 			recentFiles.remove(maxRecentFiles - 1);
 		}
+		TileMolester.settings.setRecentFiles(recentFiles);
 	}
-
 }

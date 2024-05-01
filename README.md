@@ -8,11 +8,13 @@ You can change the UI colors and icons theme in settings.xml.
 ## Changelog
 
 ### v0.21 (by toruzz)
-- New application icon
 - New themes for Windows and MacOS. Old custom system removed
-- UX improvements
 - Fractional scale support
-- Several fixes
+- New application icon
+- UX improvements
+- Dark mode toggle added
+- Edit color implemented
+- Tons of fixes and changes
 - Used Maven for building (PR by devnewton)
 
 ### v0.20 (by toruzz)

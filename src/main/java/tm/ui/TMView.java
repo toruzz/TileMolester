@@ -26,11 +26,18 @@ import tm.canvases.TMEditorCanvas;
 import tm.tilecodecs.TileCodec;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.*;
+import javax.swing.plaf.InternalFrameUI;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+
+import com.formdev.flatlaf.extras.components.FlatInternalFrame;
+import com.formdev.flatlaf.extras.components.FlatStyleableComponent;
+import com.formdev.flatlaf.ui.FlatInternalFrameTitlePane;
+
 import java.awt.*;
 import java.awt.event.*;
-import java.lang.reflect.Array;
+import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -45,13 +52,6 @@ import java.util.Vector;
  **/
 
 public class TMView extends JInternalFrame {
-	Color MenuBG = TMUI.MenuBG;
-	Color WindowBG = TMUI.WindowBG;
-	Color AsideBG = TMUI.AsideBG;
-	Color FrameBG = TMUI.FrameBG;
-	boolean isLinux = TMUI.isLinux;
-	boolean isWindows = TMUI.isWindows;
-
 	private static int frameCount = 0;
 	private JPanel contentPane = new JPanel();
 	public JSlider slider = new JSlider(JSlider.VERTICAL);
@@ -73,6 +73,13 @@ public class TMView extends JInternalFrame {
 
 	private boolean sizeBlockToCanvas = true;
 
+	@Override
+	public void setFrameIcon(Icon icon)  {
+        Icon oldIcon = frameIcon;
+		frameIcon = null;
+		firePropertyChange(FRAME_ICON_PROPERTY, oldIcon, null);
+    }
+
 	/**
 	 *
 	 * Constructs a TMView for the given FileImage.
@@ -80,14 +87,14 @@ public class TMView extends JInternalFrame {
 	 **/
 
 	public TMView(TMUI ui, FileImage fileImage, TileCodec tileCodec) {
-		super(fileImage.getName(), true, true, true, true);
+		super(fileImage.getName(), true, true, true, true);	
 		this.ui = ui;
 		this.fileImage = fileImage;
+		this.frameIcon = null;
 		fileImage.addView(this);
 		setDoubleBuffered(true);
-		// setBackground(Color.gray);
-		setFrameIcon(null);
-		setBackground(Color.decode("#f0f0f0"));
+		// TODO: Load icon depending on file type
+		//setFrameIcon(null);
 
 		setDefaultCloseOperation(JInternalFrame.DO_NOTHING_ON_CLOSE);
 
@@ -111,12 +118,11 @@ public class TMView extends JInternalFrame {
 
 		// init UI components
 		// the panel containing the slider and editor canvas
-		// contentPane.setBackground(Color.gray);
-		//contentPane.setBackground(FrameBG);
 		contentPane.setLayout(null);
 		contentPane.setFocusable(true);
 		contentPane.addKeyListener(new ViewKeyListener(this));
 		contentPane.setFocusTraversalKeysEnabled(false); // so VK_TAB key events are caught
+		
 		contentPane.addMouseListener(
 				new MouseAdapter() {
 					public void mousePressed(MouseEvent e) {

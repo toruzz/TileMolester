@@ -74,8 +74,6 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
     private int blockHeight=1;
     private boolean rowInterleaved=false;
 	private boolean showBlockGrid=false;
-	
-	boolean DarkIcons = TMUI.DarkIcons;
 
 /**
 *
@@ -220,7 +218,7 @@ public class TMEditorCanvas extends TMTileCanvas implements MouseInputListener {
 **/
 
     public void mouseExited(MouseEvent e) {
-        // TODO: remove statusbar coords text
+        ui.hideStatusBarCoords();
     }
 
 /**

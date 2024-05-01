@@ -221,4 +221,13 @@ public class TMStatusBar extends JPanel {
         gbc.weighty = wy;
     }
 
+
+	/**
+	 *
+	 * Sets coordinates text.
+	 *
+	 */
+	public void setCoords(String string) {
+		coordsLabel.setText(string);
+	}
 }

@@ -16,17 +16,12 @@
 *
 */
 
-import javax.swing.UIManager;
+package tm;
 
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import com.formdev.flatlaf.FlatDarkLaf;
-
+import tm.ui.TMSettings;
+import tm.ui.TMTheme;
 import tm.ui.TMUI;
-import java.awt.Color;
-import java.awt.SystemColor;
-//import java.lang.annotation.Native;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
+
 import java.util.logging.Logger;
 
 
@@ -48,27 +43,15 @@ public class TileMolester {
 	 **/
 
 	Logger mLog = Logger.getGlobal();
+	public static TMSettings settings;
 	
 	public TileMolester() {
 		System.setProperty( "apple.awt.application.appearance", "system" );
 		System.setProperty( "apple.laf.useScreenMenuBar", "true" );
-
-		boolean isLinux = TMUI.isLinux;
-		boolean isMacOs = TMUI.isMacOs;
-		boolean isWindows = TMUI.isWindows;
-		try {
-			if (isMacOs) {
-				FlatMacDarkLaf.setup();
-				UIManager.setLookAndFeel(new FlatMacDarkLaf());
-			} else {
-				FlatDarkLaf.setup();
-				UIManager.setLookAndFeel(new FlatDarkLaf());
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		System.setProperty( "apple.awt.application.name", "Tile Molester" );
+		
+		settings = new TMSettings();
+		new TMTheme();
 		new TMUI();
 	}
 

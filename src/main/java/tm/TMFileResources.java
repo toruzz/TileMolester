@@ -281,7 +281,7 @@ public class TMFileResources {
 	public String toXML() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-		sb.append("<!DOCTYPE tmres SYSTEM \"tmres.dtd\">\n");
+		sb.append("<!DOCTYPE tmres SYSTEM \"resources\\tmres.dtd\">\n");
 		sb.append("<tmres>\n");
 
 		sb.append(bookmarksToXML());

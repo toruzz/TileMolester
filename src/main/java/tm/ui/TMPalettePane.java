@@ -35,7 +35,6 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.border.*;
 
 /**
 *
@@ -73,15 +72,6 @@ public class TMPalettePane extends JPanel implements MouseInputListener {
 **/
 
     public TMPalettePane(TMUI ui) {
-		boolean DarkIcons = TMUI.DarkIcons;
-		if(DarkIcons){
-    		decButton.setIcon(new ImageIcon(cl.getResource("icons/dark/DecPalIndex24.png")));
-    		incButton.setIcon(new ImageIcon(cl.getResource("icons/dark/IncPalIndex24.png")));
-    		leftShiftButton.setIcon(new ImageIcon(cl.getResource("icons/dark/DecPalIndex24.png")));
-    		rightShiftButton.setIcon(new ImageIcon(cl.getResource("icons/dark/IncPalIndex24.png")));
-    		swapButton.setIcon(new ImageIcon(cl.getResource("icons/dark/Swap24.png")));
-		}
-
         this.ui = ui;
         vizualiser = new TMPaletteVizualiser();
         //setBorder(new EtchedBorder(EtchedBorder.RAISED));

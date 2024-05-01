@@ -31,6 +31,7 @@ Row_Interleave_Blocks =
 Block_Grid = 
 Tile_Grid = 
 Pixel_Grid = 
+Dark_Mode = 
 
 # Edit Menu
 
@@ -73,7 +74,7 @@ Bookmarks =
 # Palette menu
 
 Palette = 
-Edit_Colors = 
+Edit_Color = 
 Format = 
 Size = 
 Import_From = 
@@ -179,7 +180,7 @@ Add_To_Bookmarks_Dialog_Title =
 Organize_Bookmarks_Dialog_Title = 
 Add_To_Palettes_Dialog_Title = 
 Organize_Palettes_Dialog_Title = 
-Edit_Colors_Dialog_Title = 
+Edit_Color_Dialog_Title = 
 Palette_Size_Dialog_Title = 
 New_Palette_Dialog_Title = 
 Import_Internal_Palette_Dialog_Title = 
