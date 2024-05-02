@@ -22,6 +22,10 @@ import tm.ui.TMSettings;
 import tm.ui.TMTheme;
 import tm.ui.TMUI;
 
+import java.awt.Image;
+import java.awt.Taskbar;
+import java.awt.Toolkit;
+import com.formdev.flatlaf.util.SystemInfo;
 import java.util.logging.Logger;
 
 
@@ -43,12 +47,27 @@ public class TileMolester {
 	 **/
 
 	Logger mLog = Logger.getGlobal();
+	ClassLoader cl = getClass().getClassLoader();
 	public static TMSettings settings;
 	
 	public TileMolester() {
-		System.setProperty( "apple.awt.application.appearance", "system" );
-		System.setProperty( "apple.laf.useScreenMenuBar", "true" );
-		System.setProperty( "apple.awt.application.name", "Tile Molester" );
+		if(SystemInfo.isMacOS) {
+			System.setProperty( "apple.awt.application.appearance", "system" );
+			System.setProperty( "apple.laf.useScreenMenuBar", "true" );
+			System.setProperty( "apple.awt.application.name", "Tile Molester" );
+
+			final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
+			final Image macIcon = defaultToolkit.getImage(cl.getResource("icons/TMIcon_dock.png"));
+			final Taskbar taskbar = Taskbar.getTaskbar();
+	
+			try {
+				taskbar.setIconImage(macIcon);
+			} catch (final UnsupportedOperationException e) {
+				System.out.println("taskbar.setIconImage not supported");
+			} catch (final SecurityException e) {
+				System.out.println("There was a security exception for taskbar.setIconImage");
+			}
+		}
 		
 		settings = new TMSettings();
 		new TMTheme();

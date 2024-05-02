@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatDarkLaf;
@@ -20,10 +22,12 @@ public class TMTheme {
 	static public boolean darkMode = true;
 	static public int theme = getCurrentTheme();
 
-	public static final int WINUNIX_LIGHT_THEME = 1;
-	public static final int WINUNIX_DARK_THEME = 2;
+	public static final int WINDOWS_LIGHT_THEME = 1;
+	public static final int WINDOWS_DARK_THEME = 2;
 	public static final int MACOS_LIGHT_THEME = 3;
 	public static final int MACOS_DARK_THEME = 4;
+	public static final int LINUX_LIGHT_THEME = 5;
+	public static final int LINUX_DARK_THEME = 6;
 
 	public static final String WINDOWS_LIGHT_BAR_BG = "#F0F0F0";
 	public static final String WINDOWS_LIGHT_WIN_BG = "#FFFFFF";
@@ -48,7 +52,10 @@ public class TMTheme {
 	public TMTheme() {
 		loadTheme();
 		FlatSVGIcon.ColorFilter.getInstance().add(Color.decode("#212121"), Color.decode("#292929"), Color.decode("#e1e1e1"));
-
+		if( SystemInfo.isLinux ) {
+			JFrame.setDefaultLookAndFeelDecorated( true );
+			JDialog.setDefaultLookAndFeelDecorated( true );
+		}
 	}
 
 	public static void loadTheme() {
@@ -58,11 +65,13 @@ public class TMTheme {
 	public static void loadTheme(int theme) {
 		try {
 			switch (theme) {
-				case WINUNIX_LIGHT_THEME:
-				FlatMacLightLaf.setup();
-				UIManager.setLookAndFeel(new FlatMacLightLaf());
+				case WINDOWS_LIGHT_THEME:
+				case LINUX_LIGHT_THEME:
+					FlatMacLightLaf.setup();
+					UIManager.setLookAndFeel(new FlatMacLightLaf());
 					break;
-				case WINUNIX_DARK_THEME:
+				case WINDOWS_DARK_THEME:
+				case LINUX_DARK_THEME:
 					FlatDarkLaf.setup();
 					UIManager.setLookAndFeel(new FlatDarkLaf());
 					break;
@@ -92,11 +101,13 @@ public class TMTheme {
 	}
 
 	public static int getCurrentTheme() {
-		if((isWindows || isLinux) && darkMode) return WINUNIX_DARK_THEME;
-		if((isWindows || isLinux) && !darkMode) return WINUNIX_LIGHT_THEME;
+		if(isWindows && darkMode) return WINDOWS_DARK_THEME;
+		if(isWindows && !darkMode) return WINDOWS_LIGHT_THEME;
+		if(isLinux && darkMode) return LINUX_DARK_THEME;
+		if(isLinux && !darkMode) return LINUX_LIGHT_THEME;
 		if(isMacOs && darkMode) return MACOS_DARK_THEME;
 		if(isMacOs && !darkMode) return MACOS_LIGHT_THEME;
-		return WINUNIX_DARK_THEME;
+		return WINDOWS_DARK_THEME;
 	}
 
 	public static void setDarkMode(boolean darkMode) {
@@ -111,13 +122,15 @@ public class TMTheme {
 
         switch (TMTheme.theme) {
 			default:
-            case WINUNIX_LIGHT_THEME:
+            case WINDOWS_LIGHT_THEME:
+			case LINUX_LIGHT_THEME:
                 colors.put("BAR_BG", Color.decode(WINDOWS_LIGHT_BAR_BG));
                 colors.put("WIN_BG", Color.decode(WINDOWS_LIGHT_WIN_BG));
                 colors.put("FRAME_BG", Color.decode(WINDOWS_LIGHT_FRAME_BG));
                 colors.put("ACCENT", Color.decode(WINDOWS_LIGHT_ACCENT));
                 break;
-            case WINUNIX_DARK_THEME:
+            case WINDOWS_DARK_THEME:
+			case LINUX_DARK_THEME:
                 colors.put("BAR_BG", Color.decode(WINDOWS_DARK_BAR_BG));
                 colors.put("WIN_BG", Color.decode(WINDOWS_DARK_WIN_BG));
                 colors.put("FRAME_BG", Color.decode(WINDOWS_DARK_FRAME_BG));
