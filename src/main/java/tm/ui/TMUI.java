@@ -485,6 +485,7 @@ public class TMUI extends JFrame {
 		filelisteners = TMSpecReader.getFileListeners();
 
 		tilecodecs.add(new _3BPPLinearTileCodec());
+		tilecodecs.add(new _6BPPLinearTileCodec());
 		//////////
 
 		// create dialogs.

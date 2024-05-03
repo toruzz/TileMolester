@@ -7,7 +7,7 @@ public class _3BPPLinearTileCodec extends TileCodec {
 **/
 
     public _3BPPLinearTileCodec() {
-        super("LN99", 3, "3bpp linear");
+        super("LN98", 3, "3bpp linear");
     }
 
 /**
