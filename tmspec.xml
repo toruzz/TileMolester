@@ -223,11 +223,14 @@
 			<description>Tile Layer Pro palette (*.tpl)</description>
 		</palettefilter>
 
+		<palettefilter extensions="pal" colorformat="RIFF" size="256" offset="24" endianness="big">
+            <description>Windows Palette (*.pal)</description>
+        </palettefilter>
+
 		<palettefilter extensions="col,pal,bak" colorformat="CF00" size="256" offset="0">
 			<description>Raw palette file (*.col,*.pal)</description>
 		</palettefilter>
-
-
+		
 	</palettefilters>
 
 	<filelisteners>
